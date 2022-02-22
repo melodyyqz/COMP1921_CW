@@ -38,24 +38,24 @@ int main(int argc, char **argv)
 		printf("ERROR!\n");
 		return XBIF;
 	}
-	int sC = fscanf(iF, " "); //
-	char nC = fgetc(iF);
-	if (nC == '#')
+	int sC = fscanf(iF, " "); // accepts a space character
+	char nC = fgetc(iF); // sets nC to next character
+	if (nC == '#') // checks if nC character is #
 	{
-		cL = (char *)malloc(MCLL);
-		char *cS = fgets(cL, MCLL, iF);
-		if (!cS)
+		cL = (char *)malloc(MCLL); // dynamically allocates 128 bytes 
+		char *cS = fgets(cL, MCLL, iF); // stores max 128 bytes of characters from the file in cL
+		if (!cS) // if cS does not refer to an address then do body
 		{
-			free(cL);
-			fclose(iF);
+			free(cL); // frees memory
+			fclose(iF); 
 			printf("ERROR!\n");
 			return XBIF;
 		}
 	}
 	else
-		ungetc(nC, iF);
-	sC = fscanf(iF, " %u %u %u", &w, &h, &mG);
-	if ((sC != 1) || (w < MNID) || (w > MXID) || (h < MNID) || (h > MXID) || (mG != 255))
+		ungetc(nC, iF); // pushes back character stored in nC onto stream, decrementing the position in stream by 1 character
+	sC = fscanf(iF, " %u %u %u", &w, &h, &mG); // reads 3 unsigned integers, where the delimiter is a space, and stores them in w, h, mG
+	if ((sC != 1) || (w < MNID) || (w > MXID) || (h < MNID) || (h > MXID) || (mG != 255)) 
 	{
 		free(cL);
 		fclose(iF);
