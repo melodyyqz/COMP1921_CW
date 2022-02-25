@@ -1,1 +1,3 @@
 One function would check for the correct number of arguments. If the number of arguments entered is not 3 then an error message is returned.
+I could also create a function for initialising.
+Function for reading and sanity checking the magic number, which will close the file, print an error message and return an error code if the magic number failed the check.
