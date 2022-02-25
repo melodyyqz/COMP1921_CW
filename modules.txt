@@ -1,5 +1,5 @@
 argCheck function would check for the correct number of arguments. If the number of arguments entered is not 3 then an error message is returned.
-initialising function for magic numbers,
+initialise function for magic numbers,
 magicNumber function for reading and sanity checking the magic number, which will close the file, print an error message and return an error code if the magic number failed the check.
 commentLine function for checking if the next line is a comment line or not.
 whg function to read in width, height, grays, and sanity check them.
@@ -7,3 +7,14 @@ memoryalloc function for allocating the data pointer and sanity check the memory
 effread function for efficiently reading the code, with the sanity check, then close the file.
 openfile function to open a file for writing and check whether the file opening worked.
 writefile function to write the magic number, dimensions and gray value and check that it worked correctly.
+pgma2b function to convert from ASCII to binary
+pgmb2a function to convert from binary to ASCII
+logiccompare function to compare whether two pgm files are logically identical or not
+divfile function which should split the file into m x n image where the m and n can be input into the function so it can be used for pgmTile and pgmReduce
+combine function which puts together smaller files into a larger pgm file
+
+pgmEcho: argCheck, initialise, magicNumber, commentLine, whg, memoryalloc, effread, openfile, writefile, pgma2b, pgmb2a
+pgmComp: argCheck, pgma2b, pgmb2a, logiccompare
+pgmReduce: argCheck, divfile
+pgmTile: argCheck, divfile
+pgmAssemble: argCheck, combine
