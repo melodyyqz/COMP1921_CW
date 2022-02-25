@@ -1,0 +1,1 @@
+One function would check for the correct number of arguments. If the number of arguments entered is not 3 then an error message is returned.
