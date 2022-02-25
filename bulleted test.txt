@@ -1,0 +1,4 @@
+Tests for argCheck function:
+- Input: no arguments
+  Expected behaviour: "Usage: %s input_file output_file", returns EXIT_WRONG_ARG_COUNT error code
+- Input: less 
