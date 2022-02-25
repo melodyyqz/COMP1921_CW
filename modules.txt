@@ -1,3 +1,9 @@
 One function would check for the correct number of arguments. If the number of arguments entered is not 3 then an error message is returned.
 I could also create a function for initialising.
 Function for reading and sanity checking the magic number, which will close the file, print an error message and return an error code if the magic number failed the check.
+Function for checking if the next line is a comment line or not.
+Function to read in width, height, grays, and sanity check them.
+Function for allocating the data pointer and sanity check the memory allocation.
+Function for efficiently reading the code, with the sanity check, then close the file.
+Function to open a file for writing and check whether the file opening worked.
+Function to write the magic number, dimensions and gray value and check that it worked correctly.
