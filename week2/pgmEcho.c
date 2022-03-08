@@ -32,6 +32,19 @@
 #define MAX_IMAGE_DIMENSION 65536
 #define MAX_COMMENT_LINE_LENGTH 128
 
+// argCheck function
+int argCheck(int argNum, int correctArgNum)
+	{
+		// if actual number of arguments is different to what it should be
+		if (argNum != correctArgNum)
+		{
+		// print error message
+		printf("Usage: %s input_file output_file\n", argv[0]);
+		// return error code
+		return EXIT_WRONG_ARG_COUNT;
+		}
+	}
+
 /***********************************/
 /* main routine                    */
 /*                                 */
