@@ -43,6 +43,30 @@ int argCheck(int argNum, int correctArgNum)
 		// return error code
 		return EXIT_WRONG_ARG_COUNT;
 		}
+		return EXIT_NO_ERRORS;
+	}
+
+void initialiseMN()
+	{
+	// the magic number stored as two bytes to avoid problems with endianness
+	// Raw:    0x5035 or P5	
+	// ASCII:  0x5032 or P2	
+	unsigned char magic_number[2] = {'0','0'};
+	unsigned short *magic_Number = (unsigned short *) magic_number;
+	
+	// store ONE comment
+	char *commentLine = NULL;
+
+	// the logical width & height
+	// note: cannot be negative
+	unsigned int width = 0, height = 0;
+
+	// maximum gray value (assumed)
+	// make it an integer for ease
+	unsigned int maxGray = 255;
+
+	// pointer to raw image data
+	unsigned char *imageData = NULL;
 	}
 
 /***********************************/
@@ -58,40 +82,40 @@ int argCheck(int argNum, int correctArgNum)
 int main(int argc, char **argv)
 	{ /* main() */
 	/* check for correct number of arguments */
-	if (argc != 3)	
-		{ /* wrong arg count */
-		/* print an error message        */
-		printf("Usage: %s input_file output_file\n", argv[0]);
-		/* and return an error code      */
-		return EXIT_WRONG_ARG_COUNT;
-		} /* wrong arg count */
+	// if (argc != 3)	
+	// 	{ /* wrong arg count */
+	// 	/* print an error message        */
+	// 	printf("Usage: %s input_file output_file\n", argv[0]);
+	// 	/* and return an error code      */
+	// 	return EXIT_WRONG_ARG_COUNT;
+	// 	} /* wrong arg count */
 	
 	/* variables for storing the image       */
     	/* this is NOT good modularisation       */
     	/* and you will eventually replace it    */
     	/* for now, leave it here                */
 
-	/* the magic number		         */
-	/* stored as two bytes to avoid	         */
-	/* problems with endianness	         */
-	/* Raw:    0x5035 or P5		         */
-	/* ASCII:  0x5032 or P2		         */
-	unsigned char magic_number[2] = {'0','0'};
-	unsigned short *magic_Number = (unsigned short *) magic_number;
+	// /* the magic number		         */
+	// /* stored as two bytes to avoid	         */
+	// /* problems with endianness	         */
+	// /* Raw:    0x5035 or P5		         */
+	// /* ASCII:  0x5032 or P2		         */
+	// unsigned char magic_number[2] = {'0','0'};
+	// unsigned short *magic_Number = (unsigned short *) magic_number;
 	
-	/* we will store ONE comment	         */
-	char *commentLine = NULL;
+	// /* we will store ONE comment	         */
+	// char *commentLine = NULL;
 
-	/* the logical width & height	         */
-	/* note: cannot be negative	         */
-	unsigned int width = 0, height = 0;
+	// /* the logical width & height	         */
+	// /* note: cannot be negative	         */
+	// unsigned int width = 0, height = 0;
 
-	/* maximum gray value (assumed)	         */
-	/* make it an integer for ease	         */
-	unsigned int maxGray = 255;
+	// /* maximum gray value (assumed)	         */
+	// /* make it an integer for ease	         */
+	// unsigned int maxGray = 255;
 
-	/* pointer to raw image data	         */
-	unsigned char *imageData = NULL;
+	// /* pointer to raw image data	         */
+	// unsigned char *imageData = NULL;
 	
 	/* now start reading in the data         */
 	/* try to open the file for text I/O     */
