@@ -83,8 +83,7 @@ int checkMN(char* inputFile, unsigned char* magic_number){
 
 	// sanity check on the magic number
 	// failed magic number check
-	if (*magic_Number != MAGIC_NUMBER_ASCII_PGM)
-		{
+	if (*magic_Number != MAGIC_NUMBER_ASCII_PGM){
 		fclose(inputFile);
 
 		// print an error message
@@ -92,7 +91,8 @@ int checkMN(char* inputFile, unsigned char* magic_number){
 		
 		// and return
 		return EXIT_BAD_INPUT_FILE;
-		} // failed magic number check
+	} // failed magic number check
+	return EXIT_NO_ERRORS;
 
 }
 
@@ -127,10 +127,10 @@ int commentLine(char* inputFile, char** argv){
 		// put character back
 		ungetc(nextChar, inputFile);
 		} // not a comment line
-	
+	return EXIT_NO_ERRORS;
 }
 
-int whg(char* inputFile){
+int whg(char* inputFile, char** argv, unsigned int width, unsigned int height, unsigned int maxGray){
 	// scan whitespace if present
 	int scanCount = fscanf(inputFile, " ");
 
@@ -138,8 +138,8 @@ int whg(char* inputFile){
 	// whitespace to skip blanks
 	scanCount = fscanf(inputFile, " %u %u %u", &(width), &(height), &(maxGray));
 
-	/* sanity checks on size & grays         */
-	/* must read exactly three values        */
+	// sanity checks on size & grays
+	// must read exactly three values
 	if 	(
 		(scanCount != 3				)	||
 		(width 	< MIN_IMAGE_DIMENSION	) 	||
@@ -148,19 +148,42 @@ int whg(char* inputFile){
 		(height > MAX_IMAGE_DIMENSION	) 	||
 		(maxGray	!= 255		)
 		)
-		{ /* failed size sanity check    */
-		/* free up the memory            */
+		{ // failed size sanity check
+		// free up the memory
 		free(commentLine);
 
-		/* be tidy: close file pointer   */
+		// close file pointer
 		fclose(inputFile);
 
-		/* print an error message */
+		// print an error message
 		printf("Error: Failed to read pgm image from file %s\n", argv[1]);	
 		
-		/* and return                    */
+		// and return
 		return EXIT_BAD_INPUT_FILE;
-		} /* failed size sanity check    */
+		} // failed size sanity check
+	return EXIT_NO_ERRORS;
+}
+
+int memalloc(unsigned char* imageData, char* inputFile, char** argv){
+	// sanity check for memory allocation
+	if (imageData == NULL)
+		{ // malloc failed
+		// free up memory
+		free(commentLine);
+
+		// close file pointer
+		fclose(inputFile);
+
+		// print an error message */
+		printf("Error: Failed to read pgm image from file %s\n", argv[1]);	
+		
+		// return error code
+		return EXIT_BAD_INPUT_FILE;
+		} // malloc failed
+	// allocate the data pointer
+	long nImageBytes = width * height * sizeof(unsigned char);
+	imageData = (unsigned char *) malloc(nImageBytes);
+	return EXIT_NO_ERRORS;
 }
 
 /***********************************/
@@ -200,27 +223,8 @@ int main(int argc, char **argv)
 	if (inputFile == NULL)
 		return EXIT_BAD_INPUT_FILE;
 
+
 	
-
-	/* allocate the data pointer             */
-	long nImageBytes = width * height * sizeof(unsigned char);
-	imageData = (unsigned char *) malloc(nImageBytes);
-
-	/* sanity check for memory allocation    */
-	if (imageData == NULL)
-		{ /* malloc failed */
-		/* free up memory                */
-		free(commentLine);
-
-		/* close file pointer            */
-		fclose(inputFile);
-
-		/* print an error message */
-		printf("Error: Failed to read pgm image from file %s\n", argv[1]);	
-		
-		/* return error code             */
-		return EXIT_BAD_INPUT_FILE;
-		} /* malloc failed */
 
 	/* pointer for efficient read code       */
 	for (unsigned char *nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
