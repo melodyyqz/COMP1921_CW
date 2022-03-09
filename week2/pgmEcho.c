@@ -33,21 +33,20 @@
 #define MAX_COMMENT_LINE_LENGTH 128
 
 // argCheck function
-int argCheck(int argNum, int correctArgNum)
+int argCheck(int argNum, int correctArgNum){
+	// if actual number of arguments is different to what it should be
+	if (argNum != correctArgNum)
 	{
-		// if actual number of arguments is different to what it should be
-		if (argNum != correctArgNum)
-		{
-		// print error message
-		printf("Usage: %s input_file output_file\n", argv[0]);
-		// return error code
-		return EXIT_WRONG_ARG_COUNT;
-		}
-		return EXIT_NO_ERRORS;
+	// print error message
+	printf("Usage: %s input_file output_file\n", argv[0]);
+	// return error code
+	return EXIT_WRONG_ARG_COUNT;
 	}
+	return EXIT_NO_ERRORS;
+}
 
-void initialiseMN()
-	{
+// initialise magic number, width, height, commentLine, maxGray, pointer to raw image data
+void initialise(){
 	// the magic number stored as two bytes to avoid problems with endianness
 	// Raw:    0x5035 or P5	
 	// ASCII:  0x5032 or P2	
@@ -67,117 +66,76 @@ void initialiseMN()
 
 	// pointer to raw image data
 	unsigned char *imageData = NULL;
-	}
+}
 
-/***********************************/
-/* main routine                    */
-/*                                 */
-/* CLI parameters:                 */
-/* argv[0]: executable name        */
-/* argv[1]: input file name        */
-/* argv[2]: output file name       */
-/* returns 0 on success            */
-/* non-zero error code on fail     */
-/***********************************/
-int main(int argc, char **argv)
-	{ /* main() */
-	/* check for correct number of arguments */
-	// if (argc != 3)	
-	// 	{ /* wrong arg count */
-	// 	/* print an error message        */
-	// 	printf("Usage: %s input_file output_file\n", argv[0]);
-	// 	/* and return an error code      */
-	// 	return EXIT_WRONG_ARG_COUNT;
-	// 	} /* wrong arg count */
-	
-	/* variables for storing the image       */
-    	/* this is NOT good modularisation       */
-    	/* and you will eventually replace it    */
-    	/* for now, leave it here                */
+int checkMN(char* inputFile, unsigned char* magic_number){
+	// initialising
 
-	// /* the magic number		         */
-	// /* stored as two bytes to avoid	         */
-	// /* problems with endianness	         */
-	// /* Raw:    0x5035 or P5		         */
-	// /* ASCII:  0x5032 or P2		         */
-	// unsigned char magic_number[2] = {'0','0'};
-	// unsigned short *magic_Number = (unsigned short *) magic_number;
-	
-	// /* we will store ONE comment	         */
-	// char *commentLine = NULL;
+	// the magic number stored as two bytes to avoid problems with endianness
+	// Raw:    0x5035 or P5	
+	// ASCII:  0x5032 or P2	
+	unsigned char magic_number[2] = {'0','0'};
+	unsigned short *magic_Number = (unsigned short *) magic_number;
 
-	// /* the logical width & height	         */
-	// /* note: cannot be negative	         */
-	// unsigned int width = 0, height = 0;
-
-	// /* maximum gray value (assumed)	         */
-	// /* make it an integer for ease	         */
-	// unsigned int maxGray = 255;
-
-	// /* pointer to raw image data	         */
-	// unsigned char *imageData = NULL;
-	
-	/* now start reading in the data         */
-	/* try to open the file for text I/O     */
-	/* in ASCII mode b/c the header is text  */
-	FILE *inputFile = fopen(argv[1], "r");
-
-	/* if it fails, return error code        */
-	if (inputFile == NULL)
-		return EXIT_BAD_INPUT_FILE;
-
-	/* read in the magic number              */
+	// read in the magic number
 	magic_number[0] = getc(inputFile);
-	magic_number[1] = getc(inputFile);
+	magic_number[1] = getc(inputFile); 
 
-	/* sanity check on the magic number      */
+	// sanity check on the magic number
+	// failed magic number check
 	if (*magic_Number != MAGIC_NUMBER_ASCII_PGM)
-		{ /* failed magic number check   */
-		/* be tidy: close the file       */
+		{
 		fclose(inputFile);
 
-		/* print an error message */
+		// print an error message
 		printf("Error: Failed to read pgm image from file %s\n", argv[1]);	
 		
-		/* and return                    */
+		// and return
 		return EXIT_BAD_INPUT_FILE;
-		} /* failed magic number check   */
+		} // failed magic number check
 
-	/* scan whitespace if present            */
-	int scanCount = fscanf(inputFile, " ");
+}
 
-	/* check for a comment line              */
+int commentLine(char* inputFile, char** argv){
+	char *commentLine = NULL;
+	// check for a comment line
 	char nextChar = fgetc(inputFile);
+	// comment line
 	if (nextChar == '#')
-		{ /* comment line                */
-		/* allocate buffer               */
+		{
+		// allocate buffer
 		commentLine = (char *) malloc(MAX_COMMENT_LINE_LENGTH);
-		/* fgets() reads a line          */
-		/* capture return value          */
+		// reads a line and capture return value
 		char *commentString = fgets(commentLine, MAX_COMMENT_LINE_LENGTH, inputFile);
-		/* NULL means failure            */
+		// NULL comment read
 		if (commentString == NULL)
-			{ /* NULL comment read   */
-			/* free memory           */
+			{
+			// free memory
 			free(commentLine);
-			/* close file            */
+			// close file
 			fclose(inputFile);
 
-			/* print an error message */
+			// print an error message
 			printf("Error: Failed to read pgm image from file %s\n", argv[1]);	
 		
-			/* and return            */
+			// and return
 			return EXIT_BAD_INPUT_FILE;
-			} /* NULL comment read   */
-		} /* comment line */
+			} // NULL comment read
+		} // comment line
 	else
-		{ /* not a comment line */
-		/* put character back            */
+		{ // not a comment line
+		// put character back
 		ungetc(nextChar, inputFile);
-		} /* not a comment line */
+		} // not a comment line
+	
+}
 
-	/* read in width, height, grays          */
-	/* whitespace to skip blanks             */
+int whg(char* inputFile){
+	// scan whitespace if present
+	int scanCount = fscanf(inputFile, " ");
+
+	// read in width, height, grays
+	// whitespace to skip blanks
 	scanCount = fscanf(inputFile, " %u %u %u", &(width), &(height), &(maxGray));
 
 	/* sanity checks on size & grays         */
@@ -203,6 +161,46 @@ int main(int argc, char **argv)
 		/* and return                    */
 		return EXIT_BAD_INPUT_FILE;
 		} /* failed size sanity check    */
+}
+
+/***********************************/
+/* main routine                    */
+/*                                 */
+/* CLI parameters:                 */
+/* argv[0]: executable name        */
+/* argv[1]: input file name        */
+/* argv[2]: output file name       */
+/* returns 0 on success            */
+/* non-zero error code on fail     */
+/***********************************/
+int main(int argc, char **argv)
+	{ /* main() */
+	// initialising
+
+	// store ONE comment
+	char *commentLine = NULL;
+
+	// the logical width & height
+	// note: cannot be negative
+	unsigned int width = 0, height = 0;
+
+	// maximum gray value (assumed)
+	// make it an integer for ease
+	unsigned int maxGray = 255;
+
+	// pointer to raw image data
+	unsigned char *imageData = NULL;
+
+	/* now start reading in the data         */
+	/* try to open the file for text I/O     */
+	/* in ASCII mode b/c the header is text  */
+	FILE *inputFile = fopen(argv[1], "r");
+
+	/* if it fails, return error code        */
+	if (inputFile == NULL)
+		return EXIT_BAD_INPUT_FILE;
+
+	
 
 	/* allocate the data pointer             */
 	long nImageBytes = width * height * sizeof(unsigned char);
