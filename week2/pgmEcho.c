@@ -122,11 +122,10 @@ int commentLine(char* inputFile, char** argv){
 			return EXIT_BAD_INPUT_FILE;
 			} // NULL comment read
 		} // comment line
-	else
-		{ // not a comment line
-		// put character back
+	else {
+		// not a comment line so put character back
 		ungetc(nextChar, inputFile);
-		} // not a comment line
+		}
 	return EXIT_NO_ERRORS;
 }
 
