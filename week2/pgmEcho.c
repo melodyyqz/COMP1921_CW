@@ -21,16 +21,8 @@
 /* library for memory routines     */
 #include <stdlib.h>
 
-#define EXIT_NO_ERRORS 0
-#define EXIT_WRONG_ARG_COUNT 1
-#define EXIT_BAD_INPUT_FILE 2
-#define EXIT_BAD_OUTPUT_FILE 3
-
-#define MAGIC_NUMBER_RAW_PGM 0x3550
-#define MAGIC_NUMBER_ASCII_PGM 0x3250
-#define MIN_IMAGE_DIMENSION 1
-#define MAX_IMAGE_DIMENSION 65536
-#define MAX_COMMENT_LINE_LENGTH 128
+// definitions for error codes and maximum values
+#include definitions.h
 
 // argCheck function
 int argCheck(int argNum, int correctArgNum){
@@ -45,28 +37,28 @@ int argCheck(int argNum, int correctArgNum){
 	return EXIT_NO_ERRORS;
 }
 
-// initialise magic number, width, height, commentLine, maxGray, pointer to raw image data
-void initialise(){
-	// the magic number stored as two bytes to avoid problems with endianness
-	// Raw:    0x5035 or P5	
-	// ASCII:  0x5032 or P2	
-	unsigned char magic_number[2] = {'0','0'};
-	unsigned short *magic_Number = (unsigned short *) magic_number;
+// // initialise magic number, width, height, commentLine, maxGray, pointer to raw image data
+// void initialise(){
+// 	// the magic number stored as two bytes to avoid problems with endianness
+// 	// Raw:    0x5035 or P5	
+// 	// ASCII:  0x5032 or P2	
+// 	unsigned char magic_number[2] = {'0','0'};
+// 	unsigned short *magic_Number = (unsigned short *) magic_number;
 	
-	// store ONE comment
-	char *commentLine = NULL;
+// 	// store ONE comment
+// 	char *commentLine = NULL;
 
-	// the logical width & height
-	// note: cannot be negative
-	unsigned int width = 0, height = 0;
+// 	// the logical width & height
+// 	// note: cannot be negative
+// 	unsigned int width = 0, height = 0;
 
-	// maximum gray value (assumed)
-	// make it an integer for ease
-	unsigned int maxGray = 255;
+// 	// maximum gray value (assumed)
+// 	// make it an integer for ease
+// 	unsigned int maxGray = 255;
 
-	// pointer to raw image data
-	unsigned char *imageData = NULL;
-}
+// 	// pointer to raw image data
+// 	unsigned char *imageData = NULL;
+// }
 
 int checkMN(char* inputFile, unsigned char* magic_number){
 	// initialising
