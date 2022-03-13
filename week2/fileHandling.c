@@ -7,14 +7,21 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 
-int checkMN(char* inputFile, unsigned char* magic_number, char** argv){
-	// initialising
+// argCheck function
+int argCheck(int argNum, int correctArgNum, char** argv){
+	// if actual number of arguments is different to what it should be
+	if (argNum != correctArgNum)
+	{
+	// print error message
+	printf("Usage: %s input_file output_file\n", argv[0]);
+	// return error code
+	return EXIT_WRONG_ARG_COUNT;
+	}
+	return EXIT_NO_ERRORS;
+}
 
-	// the magic number stored as two bytes to avoid problems with endianness
-	// Raw:    0x5035 or P5	
-	// ASCII:  0x5032 or P2	
-	unsigned char magic_number[2] = {'0','0'};
-	unsigned short *magic_Number = (unsigned short *) magic_number;
+int checkMN(char* inputFile, unsigned char* magic_number, unsigned short *magic_Number, char** argv){
+	
 
 	// read in the magic number
 	magic_number[0] = getc(inputFile);
@@ -154,7 +161,7 @@ int effread(unsigned char* imageData, char* inputFile, char** argv, long nImageB
 	return EXIT_NO_ERRORS;
 }
 
-int mainFileHandling(char** argv, char* inputFile, unsigned char* magic_number, 
+int mainFileHandling(char** argv, unsigned char* magic_number, 
 					unsigned int width, unsigned int height, unsigned int maxGray,
 					unsigned char* imageData, long nImageBytes){
     FILE *inputFile = fopen(argv[1], "r");
@@ -166,8 +173,8 @@ int mainFileHandling(char** argv, char* inputFile, unsigned char* magic_number,
 	whg(inputFile, argv, width, height, maxGray);
 	memalloc(imageData, inputFile, argv, width, height);
 	effread(imageData, inputFile, argv, nImageBytes);
-	
 
 	/* we're done with the file, so close it */
 	fclose(inputFile);
+	return EXIT_NO_ERRORS;
 }

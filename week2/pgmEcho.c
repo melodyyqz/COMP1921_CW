@@ -24,18 +24,7 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 
-// argCheck function
-int argCheck(int argNum, int correctArgNum){
-	// if actual number of arguments is different to what it should be
-	if (argNum != correctArgNum)
-	{
-	// print error message
-	printf("Usage: %s input_file output_file\n", argv[0]);
-	// return error code
-	return EXIT_WRONG_ARG_COUNT;
-	}
-	return EXIT_NO_ERRORS;
-}
+
 
 
 
@@ -53,29 +42,27 @@ int main(int argc, char **argv)
 	{ /* main() */
 	// initialising
 
-	// the logical width & height
-	// note: cannot be negative
+	// the logical width & height; note: cannot be negative
 	unsigned int width = 0, height = 0;
 
-	// maximum gray value (assumed)
-	// make it an integer for ease
+	// maximum gray value (assumed); make it an integer for ease
 	unsigned int maxGray = 255;
 
 	// pointer to raw image data
 	unsigned char *imageData = NULL;
 
-	/* now start reading in the data         */
-	/* try to open the file for text I/O     */
-	/* in ASCII mode b/c the header is text  */
-	// FILE *inputFile = fopen(argv[1], "r");
+	// the magic number stored as two bytes to avoid problems with endianness
+	// Raw:    0x5035 or P5	
+	// ASCII:  0x5032 or P2	
+	unsigned char magic_number[2] = {'0','0'};
+	unsigned short *magic_Number = (unsigned short *) magic_number;
 
-	// /* if it fails, return error code        */
-	// if (inputFile == NULL)
-	// 	return EXIT_BAD_INPUT_FILE;
+	// we will store ONE comment
+	char *commentLine = NULL;
 
-
-	// /* we're done with the file, so close it */
-	// fclose(inputFile);
+	// now start reading in the data in ASCII mode b/c the header is text
+	argCheck(argc, 3, argv);
+	mainFileHandling(argv, magic_number, width, height, maxGray,, imageData, nImageBytes);
 
 	/* open a file for writing               */
 	FILE *outputFile = fopen(argv[2], "w");
