@@ -7,7 +7,7 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 
-int checkMN(char* inputFile, unsigned char* magic_number){
+int checkMN(char* inputFile, unsigned char* magic_number, char** argv){
 	// initialising
 
 	// the magic number stored as two bytes to avoid problems with endianness
@@ -124,11 +124,10 @@ int memalloc(unsigned char* imageData, char* inputFile, char** argv, unsigned in
 	return EXIT_NO_ERRORS;
 }
 
-int effread(unsigned char* imageData, char* inputFile, char** argv){ 
+int effread(unsigned char* imageData, char* inputFile, char** argv, long nImageBytes){ 
 	// pointer for efficient read code
-	for (unsigned char *nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
-		{ // per gray value
-		// read next value
+	for (unsigned char *nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++){
+		// per gray value read next value
 		int grayValue = -1;
 		int scanCount = fscanf(inputFile, " %u", &grayValue);
 
@@ -151,8 +150,8 @@ int effread(unsigned char* imageData, char* inputFile, char** argv){
 
 		// set the pixel value
 		*nextGrayValue = (unsigned char) grayValue;
-		} // per gray value
-
+		}
+	return EXIT_NO_ERRORS;
 }
 
 int mainFileHandling(char** argv){
@@ -160,7 +159,12 @@ int mainFileHandling(char** argv){
     /* if it fails, return error code        */
 	if (inputFile == NULL)
 		return EXIT_BAD_INPUT_FILE;
-
+	checkMN();
+	commentLine();
+	whg();
+	memalloc();
+	effread();
+	
 
 	/* we're done with the file, so close it */
 	fclose(inputFile);
