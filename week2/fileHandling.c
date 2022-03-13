@@ -154,16 +154,18 @@ int effread(unsigned char* imageData, char* inputFile, char** argv, long nImageB
 	return EXIT_NO_ERRORS;
 }
 
-int mainFileHandling(char** argv){
+int mainFileHandling(char** argv, char* inputFile, unsigned char* magic_number, 
+					unsigned int width, unsigned int height, unsigned int maxGray,
+					unsigned char* imageData, long nImageBytes){
     FILE *inputFile = fopen(argv[1], "r");
     /* if it fails, return error code        */
 	if (inputFile == NULL)
 		return EXIT_BAD_INPUT_FILE;
-	checkMN();
-	commentLine();
-	whg();
-	memalloc();
-	effread();
+	checkMN(inputFile, magic_number, argv);
+	commentLine(inputFile, argv);
+	whg(inputFile, argv, width, height, maxGray);
+	memalloc(imageData, inputFile, argv, width, height);
+	effread(imageData, inputFile, argv, nImageBytes);
 	
 
 	/* we're done with the file, so close it */
