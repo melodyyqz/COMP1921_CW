@@ -124,6 +124,37 @@ int memalloc(unsigned char* imageData, char* inputFile, char** argv, unsigned in
 	return EXIT_NO_ERRORS;
 }
 
+int effread(unsigned char* imageData, char* inputFile, char** argv){ 
+	// pointer for efficient read code
+	for (unsigned char *nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
+		{ // per gray value
+		// read next value
+		int grayValue = -1;
+		int scanCount = fscanf(inputFile, " %u", &grayValue);
+
+		// sanity check
+		if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255))
+			{ // fscanf failed
+			// free memory
+			free(commentLine);
+			free(imageData);	
+
+			// close file
+			fclose(inputFile);
+
+			// print error message
+			printf("Error: Failed to read pgm image from file %s\n", argv[1]);	
+		
+			// and return
+			return EXIT_BAD_INPUT_FILE;
+			} // fscanf failed
+
+		// set the pixel value
+		*nextGrayValue = (unsigned char) grayValue;
+		} // per gray value
+
+}
+
 int mainFileHandling(char** argv){
     FILE *inputFile = fopen(argv[1], "r");
     /* if it fails, return error code        */
