@@ -59,8 +59,8 @@ int main(int argc, char **argv)
     // now start reading in the data in ASCII mode b/c the header is text
     argCheck(argc, 3, argv);
 
-	mainFileHandling(argv, thePgm);
-	mainFileWrite(argv, thePgm);
+	FileHandling(argv, thePgm);
+	FileWrite(argv, thePgm);
 
 
     } /* main() */

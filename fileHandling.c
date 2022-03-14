@@ -168,7 +168,7 @@ int effread(unsigned char *imageData, FILE *inputFile, char *fileName, long nIma
 	return EXIT_NO_ERRORS;
 }
 
-int mainFileHandling(char *fileName, pgmFile *pgm)
+int FileHandling(char *fileName, pgmFile *pgm)
 {
 	FILE *inputFile = fopen(fileName, "r");
 	// if it fails, return error code

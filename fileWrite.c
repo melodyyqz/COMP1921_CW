@@ -69,7 +69,7 @@ int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width,
 }
 
 
-int mainFileWrite(char *outputFileName, pgmFile *pgm)
+int FileWrite(char *outputFileName, pgmFile *pgm)
 {
     // open a file for writing
     FILE *outputFile = fopen(outputFileName, "w");
