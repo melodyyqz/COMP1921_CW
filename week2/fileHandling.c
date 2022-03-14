@@ -21,8 +21,6 @@ int argCheck(int argNum, int correctArgNum, char** argv){
 }
 
 int checkMN(char* inputFile, unsigned char* magic_number, unsigned short *magic_Number, char** argv){
-	
-
 	// read in the magic number
 	magic_number[0] = getc(inputFile);
 	magic_number[1] = getc(inputFile); 
@@ -165,7 +163,7 @@ int mainFileHandling(char** argv, unsigned char* magic_number,
 					unsigned int width, unsigned int height, unsigned int maxGray,
 					unsigned char* imageData, long nImageBytes){
     FILE *inputFile = fopen(argv[1], "r");
-    /* if it fails, return error code        */
+    // if it fails, return error code
 	if (inputFile == NULL)
 		return EXIT_BAD_INPUT_FILE;
 	checkMN(inputFile, magic_number, argv);
@@ -174,7 +172,7 @@ int mainFileHandling(char** argv, unsigned char* magic_number,
 	memalloc(imageData, inputFile, argv, width, height);
 	effread(imageData, inputFile, argv, nImageBytes);
 
-	/* we're done with the file, so close it */
+	// we're done with the file, so close it
 	fclose(inputFile);
 	return EXIT_NO_ERRORS;
 }
