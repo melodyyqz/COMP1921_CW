@@ -8,5 +8,5 @@ all: ${TARGETS}
 
 clean:
 	rm ${TARGETS} ${MAINS} ${MODULES}
-pgmEcho:	pgmEcho.c
-	${CC} ${CCFLAGS} -o pgmEcho.o pgmEcho.c ${MODULES}
+pgmEcho:	pgmEcho.c ${MODULES}
+	${CC} ${CCFLAGS} -o pgmEcho pgmEcho.o ${MODULES}
