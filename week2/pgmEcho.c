@@ -57,7 +57,9 @@ int main(int argc, char **argv)
 
     // now start reading in the data in ASCII mode b/c the header is text
     argCheck(argc, 3, argv);
-    mainFileHandling(argv, magic_number, width, height, maxGray, imageData, nImageBytes);
+
+	mainFileHandling(argv, thePgm);
+	mainFileWrite(argv, thePgm);
 
 
     } /* main() */
