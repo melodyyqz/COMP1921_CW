@@ -42,7 +42,7 @@ int checkMN(char *inputFile, unsigned char *magic_number, unsigned short *magic_
 	return EXIT_NO_ERRORS;
 }
 
-int commentLine(char *inputFile, char **argv)
+int commentLine(char *inputFile, char *argv, char *commentLine)
 {
 	// char *commentLine = NULL;
 	// check for a comment line

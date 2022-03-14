@@ -24,13 +24,17 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 
+#include "pgmStructures.h"
+
 void initialiseStruct(pgmFile *pgm){
     pgm->width = 0;
     pgm->height = 0;
-    pgm->gray = 0;
-    pgm->*imageData = NULL;
-    pgm->*commentLine = NULL;
-    pgm
+    pgm->gray = 255;
+    pgm->imageData = NULL;
+    pgm->commentLine = NULL;
+    pgm->magic_number[0] = '0';
+	pgm->magic_number[1] = '0';
+	pgm->magic_Number = NULL;
 }
 
 
@@ -49,24 +53,7 @@ void initialiseStruct(pgmFile *pgm){
 int main(int argc, char **argv)
     { /* main() */
     // initialising
-    pgmFile thePgm = (pgmFile *)malloc(sizeof(pgmFile));
-    // the logical width & height; note: cannot be negative
-    unsigned int width = 0, height = 0;
-
-    // maximum gray value (assumed); make it an integer for ease
-    unsigned int maxGray = 255;
-
-    // pointer to raw image data
-    unsigned char *imageData = NULL;
-
-    // the magic number stored as two bytes to avoid problems with endianness
-    // Raw:    0x5035 or P5    
-    // ASCII:  0x5032 or P2    
-    unsigned char magic_number[2] = {'0','0'};
-    unsigned short *magic_Number = (unsigned short *) magic_number;
-
-    // we will store ONE comment
-    char *commentLine = NULL;
+    pgmFile *thePgm = (pgmFile *)malloc(sizeof(pgmFile));
 
     // now start reading in the data in ASCII mode b/c the header is text
     argCheck(argc, 3, argv);
