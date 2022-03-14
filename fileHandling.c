@@ -9,10 +9,17 @@
 
 
 // argCheck function
-int argCheck(int argNum, int correctArgNum, char *fileName)
+int argCheck(int argNum, int correctArgNum, char* fileName)
 {
-	// if actual number of arguments is different to what it should be
-	if (argNum != correctArgNum)
+	// if number of arguments is only 1
+	if (argNum == 1)
+	{
+		// print error message
+		printf("Usage: %s input_file output_file\n", fileName);
+		// return error code
+		return EXIT_WRONG_ARG_COUNT;
+	}
+	else if (argNum != correctArgNum)
 	{
 		// print error message
 		printf("Usage: %s input_file output_file\n", fileName);
@@ -22,7 +29,7 @@ int argCheck(int argNum, int correctArgNum, char *fileName)
 	return EXIT_NO_ERRORS;
 }
 
-int checkMN(FILE *inputFile, unsigned char *magic_number, unsigned short *magic_Number, char *fileName)
+int checkMN(FILE *inputFile, unsigned char *magic_number, unsigned short *magic_Number, char* fileName)
 {
 	// read in the magic number
 	magic_number[0] = getc(inputFile);
@@ -43,7 +50,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, unsigned short *magic_
 	return EXIT_NO_ERRORS;
 }
 
-int commentLine(FILE *inputFile, char *fileName, char *commentLine)
+int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 {
 	// char *commentLine = NULL;
 	// check for a comment line
@@ -78,7 +85,7 @@ int commentLine(FILE *inputFile, char *fileName, char *commentLine)
 	return EXIT_NO_ERRORS;
 }
 
-int whg(FILE *inputFile, char *fileName, unsigned int width, unsigned int height, unsigned int maxGray)
+int whg(FILE *inputFile, char* fileName, unsigned int width, unsigned int height, unsigned int maxGray)
 {
 	// scan whitespace if present
 	int scanCount = fscanf(inputFile, " ");
@@ -107,12 +114,12 @@ int whg(FILE *inputFile, char *fileName, unsigned int width, unsigned int height
 		printf("Error: Failed to read pgm image from file %s\n", fileName);
 
 		// and return
-		return EXIT_BAD_INPUT_FILE;
-	} // failed size sanity check
+		return EXIT_BAD_INPUT_FILFileHandling
+	} // failed size sanity checkFileHandling
 	return EXIT_NO_ERRORS;
 }
 
-int memalloc(unsigned char *imageData, FILE *inputFile, char *fileName, unsigned int width, unsigned int height)
+int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned int width, unsigned int height)
 {
 	// sanity check for memory allocation
 	if (imageData == NULL)
@@ -134,7 +141,7 @@ int memalloc(unsigned char *imageData, FILE *inputFile, char *fileName, unsigned
 	return EXIT_NO_ERRORS;
 }
 
-int effread(unsigned char *imageData, FILE *inputFile, char *fileName, long nImageBytes)
+int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nImageBytes)
 {
 	// pointer for efficient read code
 	unsigned char *nextGrayValue;
@@ -167,14 +174,14 @@ int effread(unsigned char *imageData, FILE *inputFile, char *fileName, long nIma
 	return EXIT_NO_ERRORS;
 }
 
-int FileHandling(char *fileName, pgmFile *pgm)
-{
-	FILE *inputFile = fopen(fileName, "r");
-	// if it fails, return error code
-	if (inputFile == NULL)
-		return EXIT_BAD_INPUT_FILE;
-	checkMN(inputFile, pgm->magic_number, pgm->magic_Number, fileName);
-	commentLine(inputFile, fileName, pgm->commentLine);
+int FileHandling(char* fileName, pgmFile *pgm)
+{FileHandling
+	FILE *inputFile = fopen(fileNaFileHandlingme, "r");
+	// if it fails, return error cFileHandlingode
+	if (inputFile == NULL)FileHandling
+		return EXIT_BAD_INPUT_FILEFileHandling;
+	checkMN(inputFile, pgm->magic_FileHandlingnumber, pgm->magic_Number, fileName);
+	commentLine(inputFile, fileNamFileHandlinge, pgm->commentLine);
 	whg(inputFile, fileName, pgm->width, pgm->height, pgm->gray);
 	memalloc(pgm->imageData, inputFile, fileName, pgm->width, pgm->height);
 	pgm->nImageBytes = pgm->width * pgm->height * sizeof(unsigned char);

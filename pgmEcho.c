@@ -48,16 +48,16 @@ int initialiseStruct(pgmFile *pgm){
 /* non-zero error code on fail     */
 /***********************************/
 int main(int argc, char **argv)
-    { /* main() */
+    {
     // initialising
     pgmFile *thePgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(thePgm);
 
     // now start reading in the data in ASCII mode b/c the header is text
-    argCheck(argc, 3, argv);
+    argCheck(argc, 3, argv[0]);
 
-	FileHandling(argv, thePgm);
-	FileWrite(argv, thePgm);
+	FileHandling(argv[1], thePgm);
+	FileWrite(argv[2], thePgm);
 
 
-    } /* main() */
+    }

@@ -8,7 +8,7 @@
 #include "definitions.h"
 
 
-int checkFileOpen(FILE *outputFile, char *commentLine, unsigned char *imageData, char *outputFileName)
+int checkFileOpen(FILE *outputFile, char *commentLine, unsigned char *imageData, char* outputFileName)
 {
     // NULL output file
     if (outputFile == NULL)
@@ -24,7 +24,7 @@ int checkFileOpen(FILE *outputFile, char *commentLine, unsigned char *imageData,
     return EXIT_NO_ERRORS;
 }
 
-int checkDimensionalWrite(size_t nBytesWritten, char *commentLine, unsigned char *imageData, char *outputFileName)
+int checkDimensionalWrite(size_t nBytesWritten, char *commentLine, unsigned char *imageData, char* outputFileName)
 {
     if (nBytesWritten < 0)
     {
@@ -40,7 +40,7 @@ int checkDimensionalWrite(size_t nBytesWritten, char *commentLine, unsigned char
 }
 
 int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width, size_t nBytesWritten, FILE *outputFile, 
-                char *commentLine, char *outputFileName)
+                char *commentLine, char* outputFileName)
 {
     // pointer for efficient write code
     unsigned char *nextGrayValue;
@@ -68,7 +68,7 @@ int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width,
 }
 
 
-int FileWrite(char *outputFileName, pgmFile *pgm)
+int FileWrite(char* outputFileName, pgmFile *pgm)
 {
     // open a file for writing
     FILE *outputFile = fopen(outputFileName, "w");
