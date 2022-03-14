@@ -105,7 +105,7 @@ int whg(FILE *inputFile, char *fileName, unsigned int width, unsigned int height
 		fclose(inputFile);
 
 		// print an error message
-		printf("Error: Failed to read pgm image from file %s\n", argv[1]);
+		printf("Error: Failed to read pgm image from file %s\n", fileName);
 
 		// and return
 		return EXIT_BAD_INPUT_FILE;
