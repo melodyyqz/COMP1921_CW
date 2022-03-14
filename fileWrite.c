@@ -7,7 +7,6 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 
-#include "pgmStructures.h"
 
 int checkFileOpen(FILE *outputFile, char *commentLine, unsigned char *imageData, char *outputFileName)
 {

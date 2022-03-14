@@ -9,9 +9,6 @@
 #define MAX_IMAGE_DIMENSION 65536
 #define MAX_COMMENT_LINE_LENGTH 128
 
-#ifndef pgmStructures_h
-#define pgmStructures_h
-
 typedef struct _pgmFile {
     unsigned int width;
     unsigned int height;
@@ -23,7 +20,6 @@ typedef struct _pgmFile {
     long nImageBytes;
 } pgmFile;
 
-#endif
 
 extern int FileHandling(char *fileName, pgmFile *pgm);
 extern int FileWrite(char *outputFileName, pgmFile *pgm);

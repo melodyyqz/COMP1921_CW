@@ -24,9 +24,8 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 
-#include "pgmStructures.h"
 
-void initialiseStruct(pgmFile *pgm){
+int initialiseStruct(pgmFile *pgm){
     pgm->width = 0;
     pgm->height = 0;
     pgm->gray = 255;
@@ -35,10 +34,8 @@ void initialiseStruct(pgmFile *pgm){
     pgm->magic_number[0] = '0';
 	pgm->magic_number[1] = '0';
 	pgm->magic_Number = NULL;
+    return EXIT_NO_ERRORS;
 }
-
-
-
 
 /***********************************/
 /* main routine                    */

@@ -7,7 +7,6 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 
-#include "pgmStructures.h"
 
 // argCheck function
 int argCheck(int argNum, int correctArgNum, char *fileName)
