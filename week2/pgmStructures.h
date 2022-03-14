@@ -1,3 +1,5 @@
+#ifndef pgmStructures_h
+#define pgmStructures_h
 
 typedef struct _pgmFile {
     unsigned int width;
@@ -9,3 +11,5 @@ typedef struct _pgmFile {
     char *commentLine;
     long nImageBytes;
 } pgmFile;
+
+#endif

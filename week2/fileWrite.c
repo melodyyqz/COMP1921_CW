@@ -44,7 +44,8 @@ int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width,
                 char *commentLine, char *outputFileName)
 {
     // pointer for efficient write code
-    for (unsigned char *nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
+    unsigned char *nextGrayValue;
+    for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
     { // per gray value get next char's column
         int nextCol = (nextGrayValue - imageData + 1) % width;
 

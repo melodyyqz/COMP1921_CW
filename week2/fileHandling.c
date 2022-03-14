@@ -138,7 +138,8 @@ int memalloc(unsigned char *imageData, FILE *inputFile, char *fileName, unsigned
 int effread(unsigned char *imageData, FILE *inputFile, char *fileName, long nImageBytes)
 {
 	// pointer for efficient read code
-	for (unsigned char *nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
+	unsigned char *nextGrayValue;
+	for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
 	{
 		// per gray value read next value
 		int grayValue = -1;

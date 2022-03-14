@@ -54,6 +54,7 @@ int main(int argc, char **argv)
     { /* main() */
     // initialising
     pgmFile *thePgm = (pgmFile *)malloc(sizeof(pgmFile));
+    initialiseStruct(thePgm);
 
     // now start reading in the data in ASCII mode b/c the header is text
     argCheck(argc, 3, argv);
