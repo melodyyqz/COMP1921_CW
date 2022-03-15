@@ -38,6 +38,24 @@ int initialiseStruct(pgmFile *pgm){
     return EXIT_NO_ERRORS;
 }
 
+int fileRead(char **argv, pgmFile *thePgm)
+{
+    char* fileName = argv[1];
+    FILE *inputFile = fopen(fileName, "r");
+	// if it fails, return error code
+	if (inputFile == NULL)
+		return EXIT_BAD_FILENAME;
+	checkMN(inputFile, thePgm->magic_number, fileName);
+    commentLine(inputFile, fileName, thePgm->commentLine);
+    widthHeightGray(inputFile, fileName, thePgm->width, thePgm->height, thePgm->gray);
+    thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
+	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
+    memalloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height);
+    printf("%c", thePgm->imageData);
+    effread(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
+    return 0;
+}
+
 /***********************************/
 /* main routine                    */
 /*                                 */
@@ -59,20 +77,5 @@ int main(int argc, char **argv)
     if (argc==0){
         exit(0);
     }
-    // printf("before call");
-    // fileHandling(argv, thePgm);
-    // printf("after call");
-    char* fileName = argv[1];
-    FILE *inputFile = fopen(fileName, "r");
-	// if it fails, return error code
-	if (inputFile == NULL)
-		return EXIT_BAD_FILENAME;
-    checkMN(inputFile, thePgm->magic_number, fileName);
-    commentLine(inputFile, fileName, thePgm->commentLine);
-    widthHeightGray(inputFile, fileName, thePgm->width, thePgm->height, thePgm->gray);
-    thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
-	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
-    memalloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height);
-    printf("%c", thePgm->imageData);
-    effread(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
+    fileRead(argv, thePgm);
     }
