@@ -61,6 +61,7 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 		commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
 		// reads a line and capture return value
 		char *commentString = fgets(commentLine, MAX_COMMENT_LINE_LENGTH, inputFile);
+		printf("%s", commentString);
 		// NULL comment read
 		if (commentString == NULL)
 		{
@@ -78,6 +79,41 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 	{
 		// not a comment line so put character back
 		ungetc(nextChar, inputFile);
+	}
+	return EXIT_NO_ERRORS;
+}
+
+int widthHeightGray(FILE *inputFile, char* fileName, unsigned int width, unsigned int height, unsigned int maxGray)
+{
+	// scan whitespace if present
+	int scanCount = fscanf(inputFile, " ");
+	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
+	// read in width, height, grays; whitespace to skip blanks
+	scanCount = fscanf(inputFile, " %u %u %u", &(width), &(height), &(maxGray));
+	printf("width: %d, height: %d, gray: %d\n", width, height, maxGray);
+
+	// sanity checks on size & grays - must read exactly three values
+	if (
+		(scanCount != 3) ||
+		(width < MIN_IMAGE_DIMENSION) || (width > MAX_IMAGE_DIMENSION) ||
+		(height < MIN_IMAGE_DIMENSION) || (height > MAX_IMAGE_DIMENSION) ||
+		(maxGray != 255))
+	{
+		// failed size sanity check then free up the memory
+		free(commentLine);
+
+		// close file pointer
+		fclose(inputFile);
+
+		if (maxGray != 255){
+			// print an error message and return error code
+			printf("Error: Bad gray value from file %s\n", fileName);
+			return EXIT_BAD_MAX_GRAY;
+		}
+
+		// print an error message and return error code
+		printf("Error: Bad dimensions from file %s\n", fileName);
+		return EXIT_BAD_DIMENSIONS;
 	}
 	return EXIT_NO_ERRORS;
 }

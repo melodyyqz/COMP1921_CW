@@ -66,5 +66,5 @@ int main(int argc, char **argv)
 		return EXIT_BAD_FILENAME;
     checkMN(inputFile, thePgm->magic_number, thePgm->magic_Number, fileName);
     commentLine(inputFile, fileName, thePgm->commentLine);
-    
+    widthHeightGray(inputFile, fileName, thePgm->width, thePgm->height, thePgm->gray);
     }
