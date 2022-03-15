@@ -1,7 +1,6 @@
 #ifndef definitions
 #define definitions
 
-
 #define EXIT_NO_ERRORS 0
 #define EXIT_WRONG_ARG_COUNT 1
 #define EXIT_BAD_FILENAME 2

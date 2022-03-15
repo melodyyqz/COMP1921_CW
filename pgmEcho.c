@@ -46,20 +46,24 @@ int fileRead(char **argv, pgmFile *thePgm)
 	if (inputFile == NULL)
 		return EXIT_BAD_FILENAME;
     // checks the magic numbers
-	checkMN(inputFile, thePgm->magic_number, fileName);
+	if ((checkMN(inputFile, thePgm->magic_number, fileName)!=0) ||
     // reads comment line
-    commentLine(inputFile, fileName, thePgm->commentLine);
+        (commentLine(inputFile, fileName, thePgm->commentLine)!=0) ||
     // gets width, height, and gray value
-    widthHeightGray(inputFile, fileName, thePgm->width, thePgm->height, thePgm->gray);
+        (widthHeightGray(inputFile, fileName, thePgm)!=0))
+        {
+            exit(0);
+        }
     // assigns memory for image data
     thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
 	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
     // allocates memory for image
-    memalloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height);
-    printf("%c", thePgm->imageData);
+    if ((memalloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height)!=0) ||
     // reads image data into struct
-    effread(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
-    printf("%s", thePgm->imageData);
+        (effread(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes)!=0))
+        {
+            exit(0);
+        }
     return 0;
 }
 
@@ -72,6 +76,7 @@ int fileWrite(char* outputFileName, pgmFile *pgm)
     size_t nBytesWritten = fprintf(outputFile, "P2\n%d %d\n%d\n", pgm->width, pgm->height, pgm->gray);
     checkDimensionalWrite(nBytesWritten, pgm->commentLine, pgm->imageData, outputFileName);
     effWriteCode(pgm->imageData, pgm->nImageBytes, pgm->width, nBytesWritten, outputFile, pgm->commentLine, outputFileName);
+    return 0;
 }
 
 /***********************************/
@@ -85,7 +90,7 @@ int fileWrite(char* outputFileName, pgmFile *pgm)
 /* non-zero error code on fail     */
 /***********************************/
 int main(int argc, char **argv)
-    {
+{
     // initialising pgm file
     pgmFile *thePgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(thePgm);
@@ -96,6 +101,8 @@ int main(int argc, char **argv)
     if (argc==0){
         exit(0);
     }
-    fileRead(argv, thePgm);
-    fileWrite(argv[2], thePgm);
+    if (fileRead(argv, thePgm)==0 && fileWrite(argv[2], thePgm)==0){
+        printf("ECHOED\n");
+        return 0;
+    }
     }

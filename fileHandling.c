@@ -25,7 +25,6 @@ int argCheck(int argNum, int correctArgNum, char* fileName)
 		printf("ERROR: Bad Argument Count\n");
 		return EXIT_WRONG_ARG_COUNT;
 	}
-	printf("argnum = %d\n", argNum);
 	return EXIT_NO_ERRORS;
 }
 
@@ -46,7 +45,6 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, char* fileName)
 		// and return
 		return EXIT_BAD_MAGIC_NUM;
 	} // failed magic number check
-	printf("%c%c\n", magic_number[0], magic_number[1]);
 	return EXIT_NO_ERRORS;
 }
 
@@ -85,20 +83,19 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 	return EXIT_NO_ERRORS;
 }
 
-int widthHeightGray(FILE *inputFile, char* fileName, unsigned int width, unsigned int height, unsigned int maxGray)
+int widthHeightGray(FILE *inputFile, char* fileName, pgmFile *pgm)
 {
 	// scan whitespace if present
 	int scanCount = fscanf(inputFile, " ");
 	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
 	// read in width, height, grays; whitespace to skip blanks
-	scanCount = fscanf(inputFile, " %u %u %u", &(width), &(height), &(maxGray));
-	printf("width: %d, height: %d, grays: %d\n", width, height, maxGray);
+	scanCount = fscanf(inputFile, " %u %u %u", &(pgm->width), &(pgm->height), &(pgm->gray));
 	// sanity checks on size & grays - must read exactly three values
 	if (
 		(scanCount != 3) ||
-		(width < MIN_IMAGE_DIMENSION) || (width > MAX_IMAGE_DIMENSION) ||
-		(height < MIN_IMAGE_DIMENSION) || (height > MAX_IMAGE_DIMENSION) ||
-		(maxGray != 255))
+		(pgm->width < MIN_IMAGE_DIMENSION) || (pgm->width > MAX_IMAGE_DIMENSION) ||
+		(pgm->height < MIN_IMAGE_DIMENSION) || (pgm->height > MAX_IMAGE_DIMENSION) ||
+		(pgm->gray != 255))
 	{
 		// failed size sanity check then free up the memory
 		free(commentLine);
@@ -106,7 +103,7 @@ int widthHeightGray(FILE *inputFile, char* fileName, unsigned int width, unsigne
 		// close file pointer
 		fclose(inputFile);
 
-		if (maxGray != 255){
+		if (pgm->gray != 255){
 			// print an error message and return error code
 			printf("ERROR: Bad Max Gray Value %s\n", fileName);
 			return EXIT_BAD_MAX_GRAY;
@@ -138,19 +135,16 @@ int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned
 		return EXIT_IMAGE_MALLOC_FAIL;
 	} // malloc failed
 	// allocate the data pointer
-	printf("allocated memory\n");
 	return EXIT_NO_ERRORS;
 }
 
 int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nImageBytes)
 {
-	printf("here");
 	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH); 
 	// pointer for efficient read code
 	unsigned char *nextGrayValue;
 	for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
 	{
-		printf("in for loop");
 		// per gray value read next value
 		int grayValue = -1;
 		int scanCount = fscanf(inputFile, " %u", &grayValue);
@@ -172,9 +166,7 @@ int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 
 		// set the pixel value
 		*nextGrayValue = (unsigned char)grayValue;
-		printf("value: %d\n", grayValue);
 	}
-	printf("%c\n", imageData);
 	return EXIT_NO_ERRORS;
 }
 
