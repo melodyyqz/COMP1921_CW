@@ -171,3 +171,22 @@ int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 	}
 	return EXIT_NO_ERRORS;
 }
+
+int fileHandling(FILE *inputFile, pgmFile *pgm, char* fileName){
+	if (
+		(checkMN(inputFile, pgm->magic_number, fileName)!=0) ||
+    	(commentLine(inputFile, fileName, pgm->commentLine)!=0) ||
+    	(widthHeightGray(inputFile, fileName, pgm->width, pgm->height, pgm->gray)!=0))
+	{
+		exit(0);
+	}
+    pgm->nImageBytes = pgm->width * pgm->height * sizeof(unsigned char);
+	pgm->imageData = (unsigned char *)malloc(pgm->nImageBytes);
+    if (
+		(memalloc(pgm->imageData, inputFile, fileName, pgm->width, pgm->height)!=0) ||
+    	(effread(pgm->imageData, inputFile, fileName, pgm->nImageBytes)!=0))
+	{
+		exit(0);
+	}
+	return 0;
+}
