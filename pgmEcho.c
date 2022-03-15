@@ -67,4 +67,7 @@ int main(int argc, char **argv)
     checkMN(inputFile, thePgm->magic_number, thePgm->magic_Number, fileName);
     commentLine(inputFile, fileName, thePgm->commentLine);
     widthHeightGray(inputFile, fileName, thePgm->width, thePgm->height, thePgm->gray);
+    thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
+	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
+    memalloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height);
     }

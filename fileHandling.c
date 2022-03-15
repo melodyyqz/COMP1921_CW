@@ -117,3 +117,25 @@ int widthHeightGray(FILE *inputFile, char* fileName, unsigned int width, unsigne
 	}
 	return EXIT_NO_ERRORS;
 }
+
+int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned int width, unsigned int height)
+{
+	// sanity check for memory allocation
+	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
+	if (imageData == NULL)
+	{ // malloc failed
+		// free up memory
+		free(commentLine);
+
+		// close file pointer
+		fclose(inputFile);
+
+		// print an error message
+		printf("Error: Failed to allocate memory\n");
+
+		// return error code
+		return EXIT_IMAGE_MALLOC_FAIL;
+	} // malloc failed
+	// allocate the data pointer
+	return EXIT_NO_ERRORS;
+}
