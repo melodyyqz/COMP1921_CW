@@ -55,6 +55,11 @@ int main(int argc, char **argv)
     initialiseStruct(thePgm);
     // check arguments
     argCheck(argc, 3, argv[0]);
+    FILE *inputFile = fopen(argv[1], "r");
+	// if it fails, return error code
+	if (inputFile == NULL)
+		return EXIT_BAD_FILENAME;
+    checkMN(inputFile, thePgm->magic_number, thePgm->magic_Number, argv[1]);
     // check if arguments is 0 when argCheck returns 0
     if (argc==0){
         exit(0);

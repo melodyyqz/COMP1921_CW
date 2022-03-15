@@ -27,3 +27,23 @@ int argCheck(int argNum, int correctArgNum, char* fileName)
 	}
 	return EXIT_NO_ERRORS;
 }
+
+int checkMN(FILE *inputFile, unsigned char *magic_number, char* fileName)
+{
+	// read in the magic number
+	magic_number[0] = getc(inputFile);
+	magic_number[1] = getc(inputFile);
+	// sanity check on the magic number
+	// failed magic number check
+	if (magic_number[1] != '2')
+	{
+		fclose(inputFile);
+
+		// print an error message
+		printf("Error: Bad magic number from %s\n", fileName);
+
+		// and return
+		return EXIT_BAD_MAGIC_NUM;
+	} // failed magic number check
+	return EXIT_NO_ERRORS;
+}
