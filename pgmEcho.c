@@ -59,10 +59,4 @@ int main(int argc, char **argv)
     if (argc==0){
         exit(0);
     }
-    // reads file from first file
-	FileHandling(argv[1], thePgm);
-    // writes file to output file
-	FileWrite(argv[2], thePgm);
-
-
     }
