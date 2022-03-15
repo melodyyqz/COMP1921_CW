@@ -1,6 +1,9 @@
 #ifndef fileHandling
 #define fileHandling
 
+#include "definitions.h"
+
+int initialiseStruct(pgmFile *pgm);
 int argCheck(int argNum, int correctArgNum, char* fileName);
 int checkMN(FILE *inputFile, unsigned char *magic_number, char* fileName);
 int commentLine(FILE *inputFile, char* fileName, char *commentLine);

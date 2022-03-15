@@ -7,6 +7,18 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 
+// initialise the pgm structure
+int initialiseStruct(pgmFile *pgm){
+    pgm->width = 0;
+    pgm->height = 0;
+    pgm->gray = 255;
+    pgm->imageData = NULL;
+    pgm->commentLine = NULL;
+    pgm->magic_number[0] = '0';
+	pgm->magic_number[1] = '0';
+	pgm->magic_Number = NULL;
+    return EXIT_NO_ERRORS;
+}
 
 // argCheck function
 int argCheck(int argNum, int correctArgNum, char* fileName)

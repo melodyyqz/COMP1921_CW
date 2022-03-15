@@ -6,6 +6,8 @@
 
 // definitions for error codes and maximum values
 #include "definitions.h"
+#include "fileHandling.h"
+#include "pgmReadWrite.h"
 
 int fileRead(char **argv, pgmFile *thePgm)
 {
