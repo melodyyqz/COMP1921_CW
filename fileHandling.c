@@ -25,6 +25,7 @@ int argCheck(int argNum, int correctArgNum, char* fileName)
 		printf("ERROR: Bad Argument Count\n");
 		return EXIT_WRONG_ARG_COUNT;
 	}
+	printf("argnum = %d\n", argNum);
 	return EXIT_NO_ERRORS;
 }
 
@@ -45,6 +46,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, char* fileName)
 		// and return
 		return EXIT_BAD_MAGIC_NUM;
 	} // failed magic number check
+	printf("%c%c\n", magic_number[0], magic_number[1]);
 	return EXIT_NO_ERRORS;
 }
 
@@ -90,8 +92,7 @@ int widthHeightGray(FILE *inputFile, char* fileName, unsigned int width, unsigne
 	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
 	// read in width, height, grays; whitespace to skip blanks
 	scanCount = fscanf(inputFile, " %u %u %u", &(width), &(height), &(maxGray));
-	printf("width: %d, height: %d, gray: %d\n", width, height, maxGray);
-
+	printf("width: %d, height: %d, grays: %d\n", width, height, maxGray);
 	// sanity checks on size & grays - must read exactly three values
 	if (
 		(scanCount != 3) ||
@@ -137,6 +138,7 @@ int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned
 		return EXIT_IMAGE_MALLOC_FAIL;
 	} // malloc failed
 	// allocate the data pointer
+	printf("allocated memory\n");
 	return EXIT_NO_ERRORS;
 }
 
@@ -169,24 +171,24 @@ int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 		// set the pixel value
 		*nextGrayValue = (unsigned char)grayValue;
 	}
+	printf("%c\n", imageData);
 	return EXIT_NO_ERRORS;
 }
 
-int fileHandling(FILE *inputFile, pgmFile *pgm, char* fileName){
-	if (
-		(checkMN(inputFile, pgm->magic_number, fileName)!=0) ||
-    	(commentLine(inputFile, fileName, pgm->commentLine)!=0) ||
-    	(widthHeightGray(inputFile, fileName, pgm->width, pgm->height, pgm->gray)!=0))
-	{
-		exit(0);
-	}
-    pgm->nImageBytes = pgm->width * pgm->height * sizeof(unsigned char);
-	pgm->imageData = (unsigned char *)malloc(pgm->nImageBytes);
-    if (
-		(memalloc(pgm->imageData, inputFile, fileName, pgm->width, pgm->height)!=0) ||
-    	(effread(pgm->imageData, inputFile, fileName, pgm->nImageBytes)!=0))
-	{
-		exit(0);
-	}
-	return 0;
+int fileHandling(char **argv, pgmFile *thePgm)
+{
+	char* fileName = argv[1];
+    FILE *inputFile = fopen(fileName, "r");
+	// if it fails, return error code
+	if (inputFile == NULL)
+		return EXIT_BAD_FILENAME;
+	checkMN(inputFile, thePgm->magic_number, fileName);
+    commentLine(inputFile, fileName, thePgm->commentLine);
+    widthHeightGray(inputFile, fileName, thePgm->width, thePgm->height, thePgm->gray);
+    thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
+	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
+    memalloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height);
+    printf("%c", thePgm->imageData);
+    effread(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
 }
+

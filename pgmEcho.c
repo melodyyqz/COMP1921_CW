@@ -59,11 +59,20 @@ int main(int argc, char **argv)
     if (argc==0){
         exit(0);
     }
+    // printf("before call");
+    // fileHandling(argv, thePgm);
+    // printf("after call");
     char* fileName = argv[1];
     FILE *inputFile = fopen(fileName, "r");
 	// if it fails, return error code
 	if (inputFile == NULL)
 		return EXIT_BAD_FILENAME;
-    if (fileHandling(inputFile, thePgm, fileName)==0)
-        printf("ECHOED");
+    checkMN(inputFile, thePgm->magic_number, fileName);
+    commentLine(inputFile, fileName, thePgm->commentLine);
+    widthHeightGray(inputFile, fileName, thePgm->width, thePgm->height, thePgm->gray);
+    thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
+	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
+    memalloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height);
+    printf("%c", thePgm->imageData);
+    effread(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
     }
