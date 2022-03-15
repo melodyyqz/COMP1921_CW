@@ -41,7 +41,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, char* fileName)
 		fclose(inputFile);
 
 		// print an error message
-		printf("Error: Bad Magic Number %s\n", fileName);
+		printf("ERROR: Bad Magic Number %s\n", fileName);
 
 		// and return
 		return EXIT_BAD_MAGIC_NUM;
@@ -73,7 +73,7 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 			fclose(inputFile);
 
 			// print an error message and return error code
-			printf("Error: Bad Comment Line %s\n", fileName);
+			printf("ERROR: Bad Comment Line %s\n", fileName);
 			return EXIT_BAD_COMMENT;
 		}
 	}
@@ -108,12 +108,12 @@ int widthHeightGray(FILE *inputFile, char* fileName, unsigned int width, unsigne
 
 		if (maxGray != 255){
 			// print an error message and return error code
-			printf("Error: Bad Max Gray Value %s\n", fileName);
+			printf("ERROR: Bad Max Gray Value %s\n", fileName);
 			return EXIT_BAD_MAX_GRAY;
 		}
 
 		// print an error message and return error code
-		printf("Error: Bad Dimensions %s\n", fileName);
+		printf("ERROR: Bad Dimensions %s\n", fileName);
 		return EXIT_BAD_DIMENSIONS;
 	}
 	return EXIT_NO_ERRORS;
@@ -132,7 +132,7 @@ int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned
 		fclose(inputFile);
 
 		// print an error message
-		printf("Error: Image Malloc Failed\n");
+		printf("ERROR: Image Malloc Failed\n");
 
 		// return error code
 		return EXIT_IMAGE_MALLOC_FAIL;
@@ -144,11 +144,13 @@ int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned
 
 int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nImageBytes)
 {
+	printf("here");
 	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH); 
 	// pointer for efficient read code
 	unsigned char *nextGrayValue;
 	for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
 	{
+		printf("in for loop");
 		// per gray value read next value
 		int grayValue = -1;
 		int scanCount = fscanf(inputFile, " %u", &grayValue);
@@ -164,31 +166,16 @@ int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 			fclose(inputFile);
 
 			// print error message and return error code
-			printf("Error: Bad Data %s\n", fileName);
+			printf("ERROR: Bad Data %s\n", fileName);
 			return EXIT_BAD_DATA;
 		} // fscanf failed
 
 		// set the pixel value
 		*nextGrayValue = (unsigned char)grayValue;
+		printf("value: %d\n", grayValue);
 	}
 	printf("%c\n", imageData);
 	return EXIT_NO_ERRORS;
 }
 
-int fileHandling(char **argv, pgmFile *thePgm)
-{
-	char* fileName = argv[1];
-    FILE *inputFile = fopen(fileName, "r");
-	// if it fails, return error code
-	if (inputFile == NULL)
-		return EXIT_BAD_FILENAME;
-	checkMN(inputFile, thePgm->magic_number, fileName);
-    commentLine(inputFile, fileName, thePgm->commentLine);
-    widthHeightGray(inputFile, fileName, thePgm->width, thePgm->height, thePgm->gray);
-    thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
-	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
-    memalloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height);
-    printf("%c", thePgm->imageData);
-    effread(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
-}
 

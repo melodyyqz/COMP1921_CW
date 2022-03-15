@@ -11,18 +11,58 @@
 int checkFileOpen(FILE *outputFile, char *commentLine, unsigned char *imageData, char* outputFileName)
 {
     // NULL output file
-    printf("in checkFileOpen function");
     if (outputFile == NULL)
     {
-        printf("in if statement");
         // free memory
         free(commentLine);
         free(imageData);
 
         // print an error message and return error code
-        printf("Error: Failed to write pgm image to file %s\n", outputFileName);
+        printf("ERROR: Bad File Name %s\n", outputFileName);
         return EXIT_BAD_FILENAME;
     }
-    printf("not null file");
     return EXIT_NO_ERRORS;
 }
+
+int checkDimensionalWrite(size_t nBytesWritten, char *commentLine, unsigned char *imageData, char* outputFileName)
+{
+    if (nBytesWritten < 0)
+    {
+        // dimensional write failed then free memory
+        free(commentLine);
+        free(imageData);
+
+        // print an error message and return error code
+        printf("ERROR: Bad Dimensions %s\n", outputFileName);
+        return EXIT_BAD_DIMENSIONS;
+    }
+    return EXIT_NO_ERRORS;
+}
+
+int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width, size_t nBytesWritten, FILE *outputFile, 
+                char *commentLine, char* outputFileName)
+{
+    // pointer for efficient write code
+    unsigned char *nextGrayValue;
+    for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
+    { // per gray value get next char's column
+        int nextCol = (nextGrayValue - imageData + 1) % width;
+
+        // write the entry & whitespace
+        nBytesWritten = fprintf(outputFile, "%d%c", *nextGrayValue, (nextCol ? ' ' : '\n'));
+        // sanity check on write
+        if (nBytesWritten < 0)
+        { // data write failed then free memory
+            free(commentLine);
+            free(imageData);
+
+            // print error message and return error code
+            printf("ERROR: Bad Data %s\n", outputFileName);
+            return EXIT_BAD_DATA;
+        }
+    }     // per gray value
+
+    // at this point, we are done and can exit with a success code
+    return EXIT_NO_ERRORS;
+}
+

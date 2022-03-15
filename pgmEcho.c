@@ -45,15 +45,33 @@ int fileRead(char **argv, pgmFile *thePgm)
 	// if it fails, return error code
 	if (inputFile == NULL)
 		return EXIT_BAD_FILENAME;
+    // checks the magic numbers
 	checkMN(inputFile, thePgm->magic_number, fileName);
+    // reads comment line
     commentLine(inputFile, fileName, thePgm->commentLine);
+    // gets width, height, and gray value
     widthHeightGray(inputFile, fileName, thePgm->width, thePgm->height, thePgm->gray);
+    // assigns memory for image data
     thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
 	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
+    // allocates memory for image
     memalloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height);
     printf("%c", thePgm->imageData);
+    // reads image data into struct
     effread(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
+    printf("%s", thePgm->imageData);
     return 0;
+}
+
+
+int fileWrite(char* outputFileName, pgmFile *pgm)
+{
+    // open a file for writing
+    FILE *outputFile = fopen(outputFileName, "w");
+    checkFileOpen(outputFile, pgm->commentLine, pgm->imageData, outputFileName);
+    size_t nBytesWritten = fprintf(outputFile, "P2\n%d %d\n%d\n", pgm->width, pgm->height, pgm->gray);
+    checkDimensionalWrite(nBytesWritten, pgm->commentLine, pgm->imageData, outputFileName);
+    effWriteCode(pgm->imageData, pgm->nImageBytes, pgm->width, nBytesWritten, outputFile, pgm->commentLine, outputFileName);
 }
 
 /***********************************/
@@ -71,6 +89,7 @@ int main(int argc, char **argv)
     // initialising pgm file
     pgmFile *thePgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(thePgm);
+    
     // check arguments
     argCheck(argc, 3, argv[0]);
     // check if arguments is 0 when argCheck returns 0
@@ -78,4 +97,5 @@ int main(int argc, char **argv)
         exit(0);
     }
     fileRead(argv, thePgm);
+    fileWrite(argv[2], thePgm);
     }
