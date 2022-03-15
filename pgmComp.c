@@ -7,6 +7,12 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 #include "pgmReadWrite.h"
+#include "fileHandling.h"
+
+int compareValues(char* fileOne, char* fileTwo)
+{
+    
+}
 
 int main(int argc, char **argv){
     // check arguments
@@ -20,19 +26,20 @@ int main(int argc, char **argv){
     pgmFile *firstPgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(firstPgm);
 
+        // read first file
+    fileRead(argv[1], firstPgm);
+//     printf("struct width: %i\n height: %i\n gray %i\n imageData %c\n magic number %c%c\n"
+//             , firstPgm->width, firstPgm->height, firstPgm->gray, firstPgm->imageData, firstPgm->magic_number[0], firstPgm->magic_number[1]);
+
     // initialising the second pgm file
     pgmFile *secondPgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(secondPgm);
 
-    // read first file
-    fileRead(argv[1], firstPgm);
-    printf("struct width: %i\n height: %i\n gray %i\n imageData %c\n magic number %c%c\n"
-            , firstPgm->width, firstPgm->height, firstPgm->gray, firstPgm->imageData, firstPgm->magic_number[0], firstPgm->magic_number[1]);
-
     // read second file
     fileRead(argv[2], secondPgm);
-    printf("struct width: %i\n height: %i\n gray %i\n imageData %c\n magic number %c%c\n"
-            , secondPgm->width, secondPgm->height, secondPgm->gray, secondPgm->imageData, secondPgm->magic_number[0], secondPgm->magic_number[1]);
+//     printf("struct width: %i\n height: %i\n gray %i\n imageData %c\n magic number %c%c\n"
+//             , secondPgm->width, secondPgm->height, secondPgm->gray, secondPgm->imageData, secondPgm->magic_number[0], secondPgm->magic_number[1]);
 
     // compare struct characteristics of the two files
+    printf("COMPARED");
 }

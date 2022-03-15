@@ -71,9 +71,14 @@ int fileWrite(char* outputFileName, pgmFile *pgm)
 {
     // open a file for writing
     FILE *outputFile = fopen(outputFileName, "w");
-    checkFileOpen(outputFile, pgm->commentLine, pgm->imageData, outputFileName);
+    if (checkFileOpen(outputFile, pgm->commentLine, pgm->imageData, outputFileName)!=0){
+        exit(0);
+    }
     size_t nBytesWritten = fprintf(outputFile, "P2\n%d %d\n%d\n", pgm->width, pgm->height, pgm->gray);
-    checkDimensionalWrite(nBytesWritten, pgm->commentLine, pgm->imageData, outputFileName);
-    effWriteCode(pgm->imageData, pgm->nImageBytes, pgm->width, nBytesWritten, outputFile, pgm->commentLine, outputFileName);
+    
+    if (checkDimensionalWrite(nBytesWritten, pgm->commentLine, pgm->imageData, outputFileName)!=0 ||
+        effWriteCode(pgm->imageData, pgm->nImageBytes, pgm->width, nBytesWritten, outputFile, pgm->commentLine, outputFileName)!=0){
+            exit(0);
+        }
     return 0;
 }
