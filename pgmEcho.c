@@ -49,14 +49,18 @@ int initialiseStruct(pgmFile *pgm){
 /***********************************/
 int main(int argc, char **argv)
     {
-    // initialising
+    // initialising pgm file
     pgmFile *thePgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(thePgm);
-
-    // now start reading in the data in ASCII mode b/c the header is text
+    // check arguments
     argCheck(argc, 3, argv[0]);
-
+    // check if arguments is 0 when argCheck returns 0
+    if (argc==0){
+        exit(0);
+    }
+    // reads file from first file
 	FileHandling(argv[1], thePgm);
+    // writes file to output file
 	FileWrite(argv[2], thePgm);
 
 

@@ -17,12 +17,10 @@ int argCheck(int argNum, int correctArgNum, char* fileName)
 		// print error message
 		printf("Usage: %s input_file output_file\n", fileName);
 		// return error code
-		return EXIT_WRONG_ARG_COUNT;
+		return 0;
 	}
 	else if (argNum != correctArgNum)
 	{
-		// print error message
-		printf("Usage: %s input_file output_file\n", fileName);
 		// return error code
 		return EXIT_WRONG_ARG_COUNT;
 	}
@@ -42,17 +40,16 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, unsigned short *magic_
 		fclose(inputFile);
 
 		// print an error message
-		printf("Error: Failed to read pgm image from file %s\n", fileName);
+		printf("Error: Bad magic number from %s\n", fileName);
 
 		// and return
-		return EXIT_BAD_INPUT_FILE;
+		return EXIT_BAD_MAGIC_NUM;
 	} // failed magic number check
 	return EXIT_NO_ERRORS;
 }
 
 int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 {
-	// char *commentLine = NULL;
 	// check for a comment line
 	char nextChar = fgetc(inputFile);
 	// comment line
@@ -71,10 +68,10 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 			fclose(inputFile);
 
 			// print an error message
-			printf("Error: Failed to read pgm image from file %s\n", fileName);
+			printf("Error: Bad comment line in %s\n", fileName);
 
 			// and return
-			return EXIT_BAD_INPUT_FILE;
+			return EXIT_BAD_COMMENT;
 		} // NULL comment read
 	}	  // comment line
 	else
@@ -85,23 +82,19 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 	return EXIT_NO_ERRORS;
 }
 
-int whg(FILE *inputFile, char* fileName, unsigned int width, unsigned int height, unsigned int maxGray)
+int widthHeightGray(FILE *inputFile, char* fileName, unsigned int width, unsigned int height, unsigned int maxGray)
 {
 	// scan whitespace if present
 	int scanCount = fscanf(inputFile, " ");
 
-	// read in width, height, grays
-	// whitespace to skip blanks
+	// read in width, height, grays; whitespace to skip blanks
 	scanCount = fscanf(inputFile, " %u %u %u", &(width), &(height), &(maxGray));
 
-	// sanity checks on size & grays
-	// must read exactly three values
+	// sanity checks on size & grays - must read exactly three values
 	if (
 		(scanCount != 3) ||
-		(width < MIN_IMAGE_DIMENSION) ||
-		(width > MAX_IMAGE_DIMENSION) ||
-		(height < MIN_IMAGE_DIMENSION) ||
-		(height > MAX_IMAGE_DIMENSION) ||
+		(width < MIN_IMAGE_DIMENSION) || (width > MAX_IMAGE_DIMENSION) ||
+		(height < MIN_IMAGE_DIMENSION) || (height > MAX_IMAGE_DIMENSION) ||
 		(maxGray != 255))
 	{
 		// failed size sanity check then free up the memory
@@ -110,12 +103,16 @@ int whg(FILE *inputFile, char* fileName, unsigned int width, unsigned int height
 		// close file pointer
 		fclose(inputFile);
 
-		// print an error message
-		printf("Error: Failed to read pgm image from file %s\n", fileName);
+		if (maxGray != 255){
+			// print an error message and return error code
+			printf("Error: Bad gray value from file %s\n", fileName);
+			return EXIT_BAD_MAX_GRAY;
+		}
 
-		// and return
-		return EXIT_BAD_INPUT_FILFileHandling
-	} // failed size sanity checkFileHandling
+		// print an error message and return error code
+		printf("Error: Bad dimensions from file %s\n", fileName);
+		return EXIT_BAD_DIMENSIONS;
+	}
 	return EXIT_NO_ERRORS;
 }
 
@@ -130,11 +127,11 @@ int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned
 		// close file pointer
 		fclose(inputFile);
 
-		// print an error message */
-		printf("Error: Failed to read pgm image from file %s\n", fileName);
+		// print an error message
+		printf("Error: Failed to allocate memory\n");
 
 		// return error code
-		return EXIT_BAD_INPUT_FILE;
+		return EXIT_IMAGE_MALLOC_FAIL;
 	} // malloc failed
 	// allocate the data pointer
 
@@ -161,11 +158,9 @@ int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 			// close file
 			fclose(inputFile);
 
-			// print error message
-			printf("Error: Failed to read pgm image from file %s\n", fileName);
-
-			// and return
-			return EXIT_BAD_INPUT_FILE;
+			// print error message and return error code
+			printf("Error: Failed on reading in data from file %s\n", fileName);
+			return EXIT_BAD_DATA;
 		} // fscanf failed
 
 		// set the pixel value
@@ -175,14 +170,14 @@ int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 }
 
 int FileHandling(char* fileName, pgmFile *pgm)
-{FileHandling
-	FILE *inputFile = fopen(fileNaFileHandlingme, "r");
-	// if it fails, return error cFileHandlingode
-	if (inputFile == NULL)FileHandling
-		return EXIT_BAD_INPUT_FILEFileHandling;
-	checkMN(inputFile, pgm->magic_FileHandlingnumber, pgm->magic_Number, fileName);
-	commentLine(inputFile, fileNamFileHandlinge, pgm->commentLine);
-	whg(inputFile, fileName, pgm->width, pgm->height, pgm->gray);
+{
+	FILE *inputFile = fopen(fileName, "r");
+	// if it fails, return error code
+	if (inputFile == NULL)
+		return EXIT_BAD_FILENAME;
+	checkMN(inputFile, pgm->magic_number, pgm->magic_Number, fileName);
+	commentLine(inputFile, fileName, pgm->commentLine);
+	widthHeightGray(inputFile, fileName, pgm->width, pgm->height, pgm->gray);
 	memalloc(pgm->imageData, inputFile, fileName, pgm->width, pgm->height);
 	pgm->nImageBytes = pgm->width * pgm->height * sizeof(unsigned char);
 	pgm->imageData = (unsigned char *)malloc(pgm->nImageBytes);

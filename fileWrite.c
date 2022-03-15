@@ -19,7 +19,7 @@ int checkFileOpen(FILE *outputFile, char *commentLine, unsigned char *imageData,
 
         // print an error message and return error code
         printf("Error: Failed to write pgm image to file %s\n", outputFileName);
-        return EXIT_BAD_OUTPUT_FILE;
+        return EXIT_BAD_FILENAME;
     }
     return EXIT_NO_ERRORS;
 }
@@ -33,8 +33,8 @@ int checkDimensionalWrite(size_t nBytesWritten, char *commentLine, unsigned char
         free(imageData);
 
         // print an error message and return error code
-        printf("Error: Failed to write pgm image to file %s\n", outputFileName);
-        return EXIT_BAD_OUTPUT_FILE;
+        printf("Error: Failed on dimensional write for file %s\n", outputFileName);
+        return EXIT_BAD_DIMENSIONS;
     }
     return EXIT_NO_ERRORS;
 }
@@ -59,7 +59,7 @@ int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width,
 
             // print error message and return error code
             printf("Error: Failed to write pgm image to file %s\n", outputFileName);
-            return EXIT_BAD_OUTPUT_FILE;
+            return EXIT_BAD_DATA;
         }
     }     // per gray value
 
