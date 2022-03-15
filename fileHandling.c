@@ -40,7 +40,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, char* fileName)
 		fclose(inputFile);
 
 		// print an error message
-		printf("Error: Bad magic number from %s\n", fileName);
+		printf("Error: Bad Magic Number %s\n", fileName);
 
 		// and return
 		return EXIT_BAD_MAGIC_NUM;
@@ -71,7 +71,7 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 			fclose(inputFile);
 
 			// print an error message and return error code
-			printf("Error: Bad comment line in %s\n", fileName);
+			printf("Error: Bad Comment Line %s\n", fileName);
 			return EXIT_BAD_COMMENT;
 		}
 	}
@@ -107,12 +107,12 @@ int widthHeightGray(FILE *inputFile, char* fileName, unsigned int width, unsigne
 
 		if (maxGray != 255){
 			// print an error message and return error code
-			printf("Error: Bad gray value from file %s\n", fileName);
+			printf("Error: Bad Max Gray Value %s\n", fileName);
 			return EXIT_BAD_MAX_GRAY;
 		}
 
 		// print an error message and return error code
-		printf("Error: Bad dimensions from file %s\n", fileName);
+		printf("Error: Bad Dimensions %s\n", fileName);
 		return EXIT_BAD_DIMENSIONS;
 	}
 	return EXIT_NO_ERRORS;
@@ -131,7 +131,7 @@ int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned
 		fclose(inputFile);
 
 		// print an error message
-		printf("Error: Failed to allocate memory\n");
+		printf("Error: Image Malloc Failed\n");
 
 		// return error code
 		return EXIT_IMAGE_MALLOC_FAIL;
@@ -162,7 +162,7 @@ int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 			fclose(inputFile);
 
 			// print error message and return error code
-			printf("Error: Failed on reading in data from file %s\n", fileName);
+			printf("Error: Bad Data %s\n", fileName);
 			return EXIT_BAD_DATA;
 		} // fscanf failed
 

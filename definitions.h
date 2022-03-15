@@ -31,8 +31,4 @@ typedef struct _pgmFile {
     long nImageBytes;
 } pgmFile;
 
-// allows functions to be accessible in other C files
-extern int FileHandling(char *fileName, pgmFile *pgm);
-extern int FileWrite(char *outputFileName, pgmFile *pgm);
-
 #endif
