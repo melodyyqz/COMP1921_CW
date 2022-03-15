@@ -139,3 +139,35 @@ int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned
 	// allocate the data pointer
 	return EXIT_NO_ERRORS;
 }
+
+int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nImageBytes)
+{
+	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH); 
+	// pointer for efficient read code
+	unsigned char *nextGrayValue;
+	for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
+	{
+		// per gray value read next value
+		int grayValue = -1;
+		int scanCount = fscanf(inputFile, " %u", &grayValue);
+
+		// sanity check
+		if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255))
+		{ // fscanf failed
+			// free memory
+			free(commentLine);
+			free(imageData);
+
+			// close file
+			fclose(inputFile);
+
+			// print error message and return error code
+			printf("Error: Failed on reading in data from file %s\n", fileName);
+			return EXIT_BAD_DATA;
+		} // fscanf failed
+
+		// set the pixel value
+		*nextGrayValue = (unsigned char)grayValue;
+	}
+	return EXIT_NO_ERRORS;
+}

@@ -70,4 +70,6 @@ int main(int argc, char **argv)
     thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
 	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
     memalloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height);
+    printf("%c", thePgm->imageData);
+    effread(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
     }
