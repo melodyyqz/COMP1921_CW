@@ -32,7 +32,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, unsigned short *magic_
 	// read in the magic number
 	magic_number[0] = getc(inputFile);
 	magic_number[1] = getc(inputFile);
-	printf("%c %c", magic_number[0], magic_number[1]);
+	printf("%s", pgm->magic_number);
 	// sanity check on the magic number
 	// failed magic number check
 	if (*magic_Number != MAGIC_NUMBER_ASCII_PGM)

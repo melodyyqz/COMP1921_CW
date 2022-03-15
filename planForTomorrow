@@ -1,0 +1,10 @@
+first things first:
+- make another file, called fileHandlingTest.c, pklace everythiong but checkMN in there
+- start thorughouly debugging checkMN.
+- make sure it atleast prints out the correct magic number for the file given
+- make sure it works with all files provided, even w/ header files.
+
+fileHandlingTest.c is to store the code I have
+will be checking fileHandling.c which will hold the functions I am currently testing
+
+

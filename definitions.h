@@ -1,3 +1,7 @@
+#ifndef definitions
+#define definitions
+
+
 #define EXIT_NO_ERRORS 0
 #define EXIT_WRONG_ARG_COUNT 1
 #define EXIT_BAD_FILENAME 2
@@ -30,3 +34,5 @@ typedef struct _pgmFile {
 // allows functions to be accessible in other C files
 extern int FileHandling(char *fileName, pgmFile *pgm);
 extern int FileWrite(char *outputFileName, pgmFile *pgm);
+
+#endif
