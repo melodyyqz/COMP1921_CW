@@ -1,5 +1,6 @@
 #ifndef fileWrite
 #define fileWrite
+#include "definitions.h"
 
 int checkFileOpen(FILE *outputFile, char *commentLine, unsigned char *imageData, char* outputFileName);
 int checkDimensionalWrite(size_t nBytesWritten, char *commentLine, unsigned char *imageData, char* outputFileName);
