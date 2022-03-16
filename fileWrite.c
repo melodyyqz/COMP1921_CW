@@ -40,7 +40,7 @@ int checkDimensionalWrite(size_t nBytesWritten, char *commentLine, unsigned char
 }
 
 int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width, size_t nBytesWritten, FILE *outputFile, 
-                char *commentLine, char* outputFileName)
+                char *commentLine, char* outputFileName, unsigned char targetMagicNum)
 {
     // pointer for efficient write code
     unsigned char *nextGrayValue;
@@ -49,9 +49,14 @@ int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width,
         int nextCol = (nextGrayValue - imageData + 1) % width;
 
         // write the entry & whitespace
-        // nBytesWritten = fprintf(outputFile, "%d%c", *nextGrayValue, (nextCol ? ' ' : '\n'));
-        nBytesWritten = fwrite(nextGrayValue, 1, 1, outputFile);
-        printf("%i", *nextGrayValue);
+        if (targetMagicNum == '2'){
+            nBytesWritten = fprintf(outputFile, "%d%c", *nextGrayValue, (nextCol ? ' ' : '\n'));
+        }
+        if (targetMagicNum == '5'){
+            nBytesWritten = fwrite(nextGrayValue, 1, 1, outputFile);
+        }
+        
+ 
         // sanity check on write
         if (nBytesWritten < 0)
         { // data write failed then free memory
