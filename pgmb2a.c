@@ -23,8 +23,9 @@ int main(int argc, char **argv){
     // makes the second pgm struct identical to the first pgm struct
     pgmFile *secondPgm = firstPgm;
 
+    printf("here1");
     // reads in the first file and writes it as binary to the second file
-    if (fileRead(argv[1], firstPgm)==0 && fileWrite(argv[2], secondPgm, 2)==0){
+    if (binaryRead(argv[1], firstPgm)==0 && fileWrite(argv[2], secondPgm, 2)==0){
         printf("CONVERTED\n");
         return 0;
     }

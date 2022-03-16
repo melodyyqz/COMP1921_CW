@@ -43,6 +43,7 @@ int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width,
                 char *commentLine, char* outputFileName, int targetMagicNum)
 {
     // pointer for efficient write code
+    printf("here");
     unsigned char *nextGrayValue;
     for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
     { // per gray value get next char's column
