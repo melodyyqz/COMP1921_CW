@@ -47,6 +47,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, char* fileName)
 	magic_number[1] = getc(inputFile);
 	// sanity check on the magic number
 	// failed magic number check
+	printf("magic num %c", magic_number[1]);
 	if (magic_number[1] != '2' && magic_number[1] != '5')
 	{
 		fclose(inputFile);

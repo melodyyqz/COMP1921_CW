@@ -40,19 +40,18 @@ int checkDimensionalWrite(size_t nBytesWritten, char *commentLine, unsigned char
 }
 
 int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width, size_t nBytesWritten, FILE *outputFile, 
-                char *commentLine, char* outputFileName, unsigned char targetMagicNum)
+                char *commentLine, char* outputFileName, int targetMagicNum)
 {
     // pointer for efficient write code
     unsigned char *nextGrayValue;
     for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
     { // per gray value get next char's column
         int nextCol = (nextGrayValue - imageData + 1) % width;
-
         // write the entry & whitespace
-        if (targetMagicNum == '2'){
+        if (targetMagicNum == 2){
             nBytesWritten = fprintf(outputFile, "%d%c", *nextGrayValue, (nextCol ? ' ' : '\n'));
         }
-        if (targetMagicNum == '5'){
+        if (targetMagicNum == 5){
             nBytesWritten = fwrite(nextGrayValue, 1, 1, outputFile);
         }
         
