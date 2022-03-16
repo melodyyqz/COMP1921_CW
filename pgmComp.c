@@ -9,10 +9,6 @@
 #include "pgmReadWrite.h"
 #include "fileHandling.h"
 
-int compareValues(char* fileOne, char* fileTwo)
-{
-    
-}
 
 int main(int argc, char **argv){
     // check arguments
@@ -22,24 +18,36 @@ int main(int argc, char **argv){
         exit(0);
     }
 
-    // initialising the first pgm file
+    // initialising the pgm files
     pgmFile *firstPgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(firstPgm);
-
-        // read first file
-    fileRead(argv[1], firstPgm);
-//     printf("struct width: %i\n height: %i\n gray %i\n imageData %c\n magic number %c%c\n"
-//             , firstPgm->width, firstPgm->height, firstPgm->gray, firstPgm->imageData, firstPgm->magic_number[0], firstPgm->magic_number[1]);
-
-    // initialising the second pgm file
     pgmFile *secondPgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(secondPgm);
 
-    // read second file
+    // reads files
+    fileRead(argv[1], firstPgm);
     fileRead(argv[2], secondPgm);
-//     printf("struct width: %i\n height: %i\n gray %i\n imageData %c\n magic number %c%c\n"
-//             , secondPgm->width, secondPgm->height, secondPgm->gray, secondPgm->imageData, secondPgm->magic_number[0], secondPgm->magic_number[1]);
 
-    // compare struct characteristics of the two files
-    printf("COMPARED");
+    // assigns the pointer for each file   
+    unsigned char *nextFirstGrayValue = firstPgm->imageData;
+    unsigned char *nextSecondGrayValue = secondPgm->imageData;
+    
+    // calculates the image bytes of the first pgm file and sets nImageBytes to it
+    long nImageBytes=firstPgm->width*firstPgm->height*sizeof(unsigned char);
+    
+    // loops through checking each value of the file
+    while(nextFirstGrayValue<firstPgm->imageData+nImageBytes){
+            // checks if the value being pointed at in the first file is equal to the value being pointed at in the second file
+            if(((float) *nextSecondGrayValue)!=((float)*nextFirstGrayValue)){
+                    printf("DIFFERENT\n");
+                    return EXIT_NO_ERRORS;
+            }
+            // increments values of pointers
+            nextFirstGrayValue++;
+            nextSecondGrayValue++;
+    }
+
+    // successful
+    printf("IDENTICAL\n");
+    return EXIT_NO_ERRORS;
 }
