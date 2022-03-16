@@ -128,7 +128,7 @@ int widthHeightGray(FILE *inputFile, char* fileName, pgmFile *pgm)
 	return EXIT_NO_ERRORS;
 }
 
-int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned int width, unsigned int height)
+int memAlloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned int width, unsigned int height)
 {
 	// sanity check for memory allocation
 	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
@@ -150,7 +150,7 @@ int memalloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned
 	return EXIT_NO_ERRORS;
 }
 
-int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nImageBytes)
+int effRead(unsigned char *imageData, FILE *inputFile, char* fileName, long nImageBytes)
 {
 	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH); 
 	// pointer for efficient read code
@@ -181,4 +181,5 @@ int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 	return EXIT_NO_ERRORS;
 }
 
+int binaryRead
 
