@@ -73,7 +73,6 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 		commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
 		// reads a line and capture return value
 		char *commentString = fgets(commentLine, MAX_COMMENT_LINE_LENGTH, inputFile);
-		printf("%s", commentString);
 		// NULL comment read
 		if (commentString == NULL)
 		{
@@ -175,8 +174,6 @@ int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 			printf("ERROR: Bad Data %s\n", fileName);
 			return EXIT_BAD_DATA;
 		} // fscanf failed
-
-		printf("%i", grayValue);
 		// set the pixel value
 		*nextGrayValue = (unsigned char)grayValue;
 	}
