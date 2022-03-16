@@ -1,6 +1,6 @@
 CC=gcc
 CCFLAGS = -g -std=c99 -fmax-errors=1 -Wall -Werror
-MODULES = fileHandling.o fileWrite.o pgmReadWrite.o
+MODULES = fileHandling.o fileWrite.o pgmReadWrite.o pgmConversion.o
 MAINS = pgmEcho.o pgmComp.o
 TARGETS = pgmEcho pgmComp
 

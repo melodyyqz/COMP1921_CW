@@ -49,7 +49,9 @@ int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width,
         int nextCol = (nextGrayValue - imageData + 1) % width;
 
         // write the entry & whitespace
-        nBytesWritten = fprintf(outputFile, "%d%c", *nextGrayValue, (nextCol ? ' ' : '\n'));
+        // nBytesWritten = fprintf(outputFile, "%d%c", *nextGrayValue, (nextCol ? ' ' : '\n'));
+        nBytesWritten = fwrite(nextGrayValue, 1, 1, outputFile);
+        printf("%i", *nextGrayValue);
         // sanity check on write
         if (nBytesWritten < 0)
         { // data write failed then free memory

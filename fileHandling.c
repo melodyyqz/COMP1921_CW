@@ -47,7 +47,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, char* fileName)
 	magic_number[1] = getc(inputFile);
 	// sanity check on the magic number
 	// failed magic number check
-	if (magic_number[1] != '2')
+	if (magic_number[1] != '2' && magic_number[1] != '5')
 	{
 		fclose(inputFile);
 
@@ -176,6 +176,7 @@ int effread(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 			return EXIT_BAD_DATA;
 		} // fscanf failed
 
+		printf("%i", grayValue);
 		// set the pixel value
 		*nextGrayValue = (unsigned char)grayValue;
 	}

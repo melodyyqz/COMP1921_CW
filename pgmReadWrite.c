@@ -74,7 +74,7 @@ int fileWrite(char* outputFileName, pgmFile *pgm)
     if (checkFileOpen(outputFile, pgm->commentLine, pgm->imageData, outputFileName)!=0){
         exit(0);
     }
-    size_t nBytesWritten = fprintf(outputFile, "P2\n%d %d\n%d\n", pgm->width, pgm->height, pgm->gray);
+    size_t nBytesWritten = fprintf(outputFile, "P5\n%d %d\n%d\n", pgm->width, pgm->height, pgm->gray);
     
     if (checkDimensionalWrite(nBytesWritten, pgm->commentLine, pgm->imageData, outputFileName)!=0 ||
         effWriteCode(pgm->imageData, pgm->nImageBytes, pgm->width, nBytesWritten, outputFile, pgm->commentLine, outputFileName)!=0){
