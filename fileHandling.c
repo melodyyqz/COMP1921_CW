@@ -181,35 +181,10 @@ int effRead(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 	return EXIT_NO_ERRORS;
 }
 
-int binaryRead(unsigned char *imageData, FILE *inputFile, char* fileName, long nImageBytes)
+int binaryRead(pgmFile *pgm, FILE *inputFile)
 {
-	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH); 
-	// pointer for efficient read code
-	unsigned char *nextGrayValue;
-	printf("here");
-	for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
-	{
-		// per gray value read next value
-		int grayValue = -1;
-		int scanCount = fread(nextGrayValue, 1, 1, inputFile);
-
-		// sanity check
-		if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255))
-		{ // fscanf failed
-			// free memory
-			free(commentLine);
-			free(imageData);
-
-			// close file
-			fclose(inputFile);
-
-			// print error message and return error code
-			printf("ERROR: Bad Data %s\n", fileName);
-			return EXIT_BAD_DATA;
-		} // fscanf failed
-		// set the pixel value
-		*nextGrayValue = (unsigned char)grayValue;
-	}
+	printf("magic num %c%c", pgm->magic_number[0], pgm->magic_number[1]);
+	fread(pgm->imageData, sizeof(unsigned char), (pgm->width * pgm->height), inputFile);
 	return EXIT_NO_ERRORS;
 }
 

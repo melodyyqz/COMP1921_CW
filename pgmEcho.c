@@ -50,6 +50,6 @@ int main(int argc, char **argv)
     }
     if (fileRead(argv[1], thePgm)==0 && fileWrite(argv[2], thePgm, 2)==0){
         printf("ECHOED\n");
-        return 0;
+        return EXIT_NO_ERRORS;
     }
     }

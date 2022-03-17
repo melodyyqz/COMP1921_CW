@@ -29,18 +29,23 @@ int fileRead(char *fileName, pgmFile *thePgm)
     thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
 	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
     // allocates memory for image
-    if (thePgm->magic_number[1]==2){
-        int readSuccess = effRead(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
-    }
-    else if (thePgm->magic_number[1]==5){
-        int readSuccess = binaryRead(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
-    }
-    if ((memAlloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height)!=0) ||
+    // if (thePgm->magic_number[1]==2){
+    //     int readSuccess = effRead(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
+    // }
+    // else if (thePgm->magic_number[1]==5){
+    //     int readSuccess = binaryRead(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
+    // }
+    if (memAlloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height)!=0)
     // reads image data into struct
-        (effRead(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes)!=0))
-        {
-            exit(0);
-        }
+        exit(0);
+    if (thePgm->magic_number[1] == '5'){
+        if (binaryRead(thePgm, inputFile)!=0){
+            exit(0);}
+    }
+    else if (thePgm->magic_number[1] == '2'){
+        if (effRead(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes)!=0){
+            exit(0);}
+    }
     return 0;
 }
 
