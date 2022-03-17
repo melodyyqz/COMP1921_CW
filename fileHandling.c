@@ -71,20 +71,31 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 	{
 		// allocate buffer
 		commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
-		// reads a line and capture return value
-		char *commentString = fgets(commentLine, MAX_COMMENT_LINE_LENGTH, inputFile);
-		// NULL comment read
-		if (commentString == NULL)
-		{
-			// free memory
-			free(commentLine);
-			// close file
-			fclose(inputFile);
+		char *commentString = commentLine;
+		int count = 0;
+		while (1==1){
+			count++;
+			*commentString = fgetc(inputFile);
+			if(*commentString=='\n'){
+				return 0;
+			}
+			commentString++;
+			if (commentString == NULL || count>128)
+			{
+				// free memory
+				free(commentLine);
+				// close file
+				fclose(inputFile);
 
-			// print an error message and return error code
-			printf("ERROR: Bad Comment Line %s\n", fileName);
-			return EXIT_BAD_COMMENT;
+				// print an error message and return error code
+				printf("ERROR: Bad Comment Line %s\n", fileName);
+				return EXIT_BAD_COMMENT;
+			}
 		}
+		// // reads a line and capture return value
+		// char *commentString = fgets(commentLine, MAX_COMMENT_LINE_LENGTH, inputFile);
+		// NULL comment read
+		
 	}
 	else
 	{
@@ -98,7 +109,6 @@ int widthHeightGray(FILE *inputFile, char* fileName, pgmFile *pgm)
 {
 	// scan whitespace if present
 	int scanCount = fscanf(inputFile, " ");
-	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
 	// read in width, height, grays; whitespace to skip blanks
 	scanCount = fscanf(inputFile, " %u %u %u", &(pgm->width), &(pgm->height), &(pgm->gray));
 	// sanity checks on size & grays - must read exactly three values
@@ -109,7 +119,7 @@ int widthHeightGray(FILE *inputFile, char* fileName, pgmFile *pgm)
 		(pgm->gray != 255))
 	{
 		// failed size sanity check then free up the memory
-		free(commentLine);
+		free(pgm->commentLine);
 
 		// close file pointer
 		fclose(inputFile);
@@ -127,14 +137,13 @@ int widthHeightGray(FILE *inputFile, char* fileName, pgmFile *pgm)
 	return EXIT_NO_ERRORS;
 }
 
-int memAlloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned int width, unsigned int height)
+int memAlloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned int width, unsigned int height, pgmFile *pgm)
 {
 	// sanity check for memory allocation
-	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
 	if (imageData == NULL)
 	{ // malloc failed
 		// free up memory
-		free(commentLine);
+		free(pgm->commentLine);
 
 		// close file pointer
 		fclose(inputFile);
@@ -149,9 +158,8 @@ int memAlloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned
 	return EXIT_NO_ERRORS;
 }
 
-int effRead(unsigned char *imageData, FILE *inputFile, char* fileName, long nImageBytes)
+int effRead(unsigned char *imageData, FILE *inputFile, char* fileName, long nImageBytes, pgmFile* pgm)
 {
-	char *commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH); 
 	// pointer for efficient read code
 	unsigned char *nextGrayValue;
 	for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
@@ -164,7 +172,7 @@ int effRead(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 		if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255))
 		{ // fscanf failed
 			// free memory
-			free(commentLine);
+			free(pgm->commentLine);
 			free(imageData);
 
 			// close file

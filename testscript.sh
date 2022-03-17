@@ -25,6 +25,9 @@ echo "Testing pgmEcho.c with an input file name which does not exist: ./pgmEcho 
 ./pgmEcho notexist.pgm output.pgm
 echo ""
 
+# Testing pgmEcho.c with bad magic number
+echo "Testing pgmEcho.c with bad magic number: ./pgmEcho "
+
 # Testing pgmEcho.c with too long comment line
 echo "Testing pgmEcho.c with too long comment line: ./pgmEcho longcomment.pgm output.pgm"
 
