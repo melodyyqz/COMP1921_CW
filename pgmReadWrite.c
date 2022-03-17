@@ -9,13 +9,15 @@
 #include "fileHandling.h"
 
 
-int fileRead(char *fileName, pgmFile *thePgm)
+int fileRead(char* fileName, pgmFile *thePgm)
 {
     // char* fileName = argv[argNum];
     FILE *inputFile = fopen(fileName, "r");
 	// if it fails, return error code
-	if (inputFile == NULL)
-		return EXIT_BAD_FILENAME;
+    if (inputFile == NULL){
+        printf("ERROR: Bad File Name %s", fileName);
+        return EXIT_BAD_FILENAME;
+        }
     // checks the magic numbers
 	if ((checkMN(inputFile, thePgm->magic_number, fileName)!=0) ||
     // reads comment line
@@ -29,12 +31,6 @@ int fileRead(char *fileName, pgmFile *thePgm)
     thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
 	thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
     // allocates memory for image
-    // if (thePgm->magic_number[1]==2){
-    //     int readSuccess = effRead(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
-    // }
-    // else if (thePgm->magic_number[1]==5){
-    //     int readSuccess = binaryRead(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes);
-    // }
     if (memAlloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height)!=0)
     // reads image data into struct
         exit(0);
