@@ -7,6 +7,7 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 #include "fileHandling.h"
+#include "pgma2b.h"
 
 
 int fileRead(char* fileName, pgmFile *thePgm)

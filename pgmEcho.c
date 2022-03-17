@@ -24,6 +24,7 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 #include "pgmReadWrite.h"
+#include "pgma2b.h"
 
 
 /***********************************/
@@ -48,8 +49,19 @@ int main(int argc, char **argv)
     if (argc==0){
         exit(0);
     }
-    if (fileRead(argv[1], thePgm)==0 && fileWrite(argv[2], thePgm, thePgm->magic_number[1])==0){
+    if (fileRead(argv[1], thePgm)!=0){
+        exit(0);
+    }
+    if (thePgm->magic_number[1]=='2'){
+        if (fileWrite(argv[2], thePgm, 2)==0){
         printf("ECHOED\n");
         return EXIT_NO_ERRORS;
+        }
+    }
+    if (thePgm->magic_number[1]=='5'){
+        if (fileWrite(argv[2], thePgm, 5)==0){
+        printf("ECHOED\n");
+        return EXIT_NO_ERRORS;
+        }
     }
     }

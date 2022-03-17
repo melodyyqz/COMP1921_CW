@@ -8,6 +8,12 @@
 #include "definitions.h"
 #include "pgmReadWrite.h"
 
+int b2a(pgmFile *firstPgm, char** argv){
+    fileRead(argv[1], firstPgm);
+    fileWrite(argv[2], firstPgm, 2);
+    printf("CONVERTED\n");
+}
+
 int main(int argc, char **argv){
     // check arguments
     argCheck(argc, 3, argv[0]);
@@ -19,12 +25,6 @@ int main(int argc, char **argv){
     // initialising the first pgm file and initialise the first pgm's struct
     pgmFile *firstPgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(firstPgm);
-    fileRead(argv[1], firstPgm);
-
-    // makes the second pgm struct identical to the first pgm struct
-    // pgmFile *secondPgm = firstPgm;
-
-    fileWrite(argv[2], firstPgm, 2);
-    printf("CONVERTED\n");
+    b2a(firstPgm, argv);
 
 }
