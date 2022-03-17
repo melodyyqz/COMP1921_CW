@@ -44,10 +44,20 @@ echo "Testing pgmEcho.c with width below min dimensions: ./pgmEcho lowwidthdimen
 ./pgmEcho lowwidthdimensions.pgm output.pgm
 echo ""
 
+# Testing pgmEcho.c with a bad gray value
+echo "Testing pgmEcho.c with a bad gray value: ./pgmEcho badgray.pgm output.pgm"
+./pgmEcho badgray.pgm output.pgm
+echo ""
 
+# Testing pgmEcho.c when there is bad data with a gray value over 255
+echo "Testing pgmEcho.c when there is bad data with a gray value over 255: ./pgmEcho highgray.pgm output.pgm"
+./pgmEcho highgray.pgm output.pgm
+echo ""
 
-
-
+# Testing pgmEcho.c when there is bad data with a gray value under 0
+echo "Testing pgmEcho.c when there is bad data with a gray value under 0: ./pgmEcho lowgray.pgm output.pgm"
+./pgmEcho lowgray.pgm output.pgm
+echo ""
 
 
 # Testing pgmComp.c without any file names
