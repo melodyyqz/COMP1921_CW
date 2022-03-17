@@ -9,6 +9,17 @@
 #include "pgmReadWrite.h"
 #include "fileHandling.h"
 
+/*
+the plan:
+- identify width and height of reduced file
+- read through array with a counter, if modulo factor = 0 then save to new file and counter++
+- when counter = width, new line
+- repeat
+*/
+
+int reducedHeight(int factor, ){
+    
+}
 
 int main(char** argv, int argc){
     // check arguments
@@ -23,4 +34,7 @@ int main(char** argv, int argc){
     char* inputFileName = argv[0];
     int factor = argv[1];
     char* outputFileName = argv[2];
+    pgmFile *firstPgm = (pgmFile *)malloc(sizeof(pgmFile));
+    initialiseStruct(firstPgm);
+    fileRead(inputFileName, firstPgm);
 }
