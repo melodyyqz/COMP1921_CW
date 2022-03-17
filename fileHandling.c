@@ -167,7 +167,6 @@ int effRead(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 		// per gray value read next value
 		int grayValue = -1;
 		int scanCount = fscanf(inputFile, " %u", &grayValue);
-		printf("%i", grayValue);
 
 		// sanity check
 		if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255))

@@ -12,7 +12,9 @@
 
 int main(int argc, char **argv){
     // check arguments
-    argCheck(argc, 3, argv[0]);
+    if (argCheck(argc, 3, argv[0])!=0){
+        exit(0);
+    }
     // check if arguments is 0 when argCheck returns 0
     if (argc==0){
         exit(0);
@@ -25,8 +27,9 @@ int main(int argc, char **argv){
     initialiseStruct(secondPgm);
 
     // reads files
-    fileRead(argv[1], firstPgm);
-    fileRead(argv[2], secondPgm);
+    if (fileRead(argv[1], firstPgm)!=0 || fileRead(argv[2], secondPgm)!=0){
+        exit(0);
+    }
 
     // assigns the pointer for each file   
     unsigned char *nextFirstGrayValue = firstPgm->imageData;

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo ""
 # Testing pgmEcho.c without any file names
 echo "Testing pgmEcho.c without any file names: ./pgmEcho"
 ./pgmEcho
@@ -33,6 +33,7 @@ echo ""
 # Testing pgmEcho.c with too long comment line
 echo "Testing pgmEcho.c with too long comment line: ./pgmEcho longcomment.pgm output.pgm"
 ./pgmEcho longcomment.pgm output.pgm
+echo ""
 
 # Testing pgmEcho.c with width past max dimensions
 echo "Testing pgmEcho.c with width past max dimensions: ./pgmEcho highwidthdimensions.pgm output.pgm"
