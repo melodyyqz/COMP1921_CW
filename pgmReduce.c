@@ -17,7 +17,18 @@ the plan:
 - repeat
 */
 
-int reducedHeight(int factor, ){
+// calculates what the height of the reduced file should be
+int reducedHeight(int factor, pgmFile *pgm){
+    return (pgm->height / factor);
+}
+
+// calculates what the width of the reduced file should be
+int reducedWidth(int factor, pgmFile *pgm){
+    return (pgm->width / factor);
+}
+
+int saveReduced(){
+    int count = 0;
     
 }
 
