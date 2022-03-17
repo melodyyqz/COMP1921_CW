@@ -8,15 +8,11 @@
 #include "definitions.h"
 #include "pgmReadWrite.h"
 
-int b2a(pgmFile *firstPgm, char** argv){
-    fileRead(argv[1], firstPgm);
-    fileWrite(argv[2], firstPgm, 2);
-    printf("CONVERTED\n");
-}
-
 int main(int argc, char **argv){
     // check arguments
-    argCheck(argc, 3, argv[0]);
+    if (argCheck(argc, 3, argv[0])!=0){
+        exit(0);
+    }
     // check if arguments is 0 when argCheck returns 0
     if (argc==0){
         exit(0);
@@ -25,10 +21,15 @@ int main(int argc, char **argv){
     // initialising the first pgm file and initialise the first pgm's struct
     pgmFile *firstPgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(firstPgm);
+    if (fileRead(argv[1], firstPgm)!=0){
+        exit(0);
+    }
     if (firstPgm->magic_number[1]!='5'){
-        printf("ERROR: Invalid file type");
+        printf("ERROR: Invalid file type\n");
         return EXIT_MISC;
     }
-    b2a(firstPgm, argv);
+    if (fileWrite(argv[2], firstPgm, 2)==0){   
+        printf("CONVERTED\n");
+    }
 
 }

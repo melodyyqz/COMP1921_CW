@@ -45,6 +45,16 @@ echo "Testing pgmEcho.c with width below min dimensions: ./pgmEcho lowwidthdimen
 ./pgmEcho lowwidthdimensions.pgm output.pgm
 echo -e "\n"
 
+# Testing pgmEcho.c with height past max dimensions
+echo "Testing pgmEcho.c with height past max dimensions: ./pgmEcho highheightdimensions.pgm output.pgm"
+./pgmEcho highheightdimensions.pgm output.pgm
+echo -e "\n"
+
+# Testing pgmEcho.c with height below min dimensions
+echo "Testing pgmEcho.c with height below min dimensions: ./pgmEcho lowheightdimensions.pgm output.pgm"
+./pgmEcho lowheightdimensions.pgm output.pgm
+echo -e "\n"
+
 # Testing pgmEcho.c with a bad gray value
 echo "Testing pgmEcho.c with a bad gray value: ./pgmEcho badgray.pgm output.pgm"
 ./pgmEcho badgray.pgm output.pgm
@@ -106,6 +116,26 @@ echo "Testing pgmComp.c with two different binary files: ./pgma2b binarytester.p
 ./pgma2b binarytester.pgm binarydifferent.pgm
 echo -e "\n"
 
+# Testing pgma2b.c with no file names
+echo "Testing pgma2b.c with no file names: ./pgma2b"
+./pgma2b
+echo -e "\n"
+
+# Testing pgma2b.c with one file name
+echo "Testing pgma2b.c with no file names: ./pgma2b asciitester.pgm"
+./pgma2b asciitester.pgm
+echo -e "\n"
+
+# Testing pgma2b.c with two file names
+echo "Testing pgma2b.c with no file names: ./pgma2b asciitester.pgm output.pgm"
+./pgma2b asciitester.pgm output.pgm
+echo -e "\n"
+
+# Testing pgma2b.c with three file names
+echo "Testing pgma2b.c with no file names: ./pgma2b asciitester.pgm output.pgm output2.pgm"
+./pgma2b asciitester.pgm output.pgm output2.pgm
+echo -e "\n"
+
 # Testing pgma2b.c with an ASCII input file
 echo "Testing pgma2b.c with an ASCII input file: ./pgma2b asciitester.pgm output.pgm"
 ./pgma2b asciitester.pgm output.pgm
@@ -114,6 +144,26 @@ echo -e "\n"
 # Testing pgma2b.c with a binary input file
 echo "Testing pgma2b with a binary input file: ./pgma2b binarytester.pgm output.pgm"
 ./pgma2b binarytester.pgm output.pgm
+echo -e "\n"
+
+# Testing pgmb2a.c with no file names
+echo "Testing pgmb2a.c with no file names: ./pgmb2a"
+./pgmb2a
+echo -e "\n"
+
+# Testing pgmb2a.c with one file name
+echo "Testing pgmb2a.c with no file names: ./pgmb2a binarytester.pgm"
+./pgmb2a binarytester.pgm
+echo -e "\n"
+
+# Testing pgmb2a.c with two file names
+echo "Testing pgmb2a.c with no file names: ./pgmb2a binarytester.pgm output.pgm"
+./pgmb2a binarytester.pgm output.pgm
+echo -e "\n"
+
+# Testing pgmb2a.c with three file names
+echo "Testing pgmb2a.c with no file names: ./pgmb2a binarytester.pgm output.pgm output2.pgm"
+./pgmb2a binarytester.pgm output.pgm output2.pgm
 echo -e "\n"
 
 # Testing pgmb2a.c with a binary input file
