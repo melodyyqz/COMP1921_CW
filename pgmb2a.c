@@ -25,6 +25,10 @@ int main(int argc, char **argv){
     // initialising the first pgm file and initialise the first pgm's struct
     pgmFile *firstPgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(firstPgm);
+    if (firstPgm->magic_number[1]!='5'){
+        printf("ERROR: Invalid file type");
+        return EXIT_MISC;
+    }
     b2a(firstPgm, argv);
 
 }

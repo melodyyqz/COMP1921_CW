@@ -79,12 +79,12 @@ echo ""
 # Testing pgmComp.c with an input file name which does not exist
 echo "Testing pgmComp.c with an input file name which does not exist: ./pgmComp notexist.pgm output.pgm"
 ./pgmComp notexist.pgm output.pgm
-echo ""
+echo -e "\n"
 
 # Testing pgmComp.c with an output file name which does not exist
 echo "Testing pgmComp.c with an input file name which does not exist: ./pgmComp output.pgm notexist.pgm"
 ./pgmComp output.pgm notexist.pgm
-echo ""
+echo -e "\n"
 
 # Testing pgmComp.c with two identical ASCII files
 echo "Testing pgmComp.c with two identical ASCII files: ./pgmComp slice0a.pgm output.pgm"
@@ -92,22 +92,37 @@ echo "Testing pgmComp.c with two identical ASCII files: ./pgmComp slice0a.pgm ou
 echo ""
 
 # Testing pgmComp.c with two different ASCII files
-echo "Testing pgmComp.c with two identical ASCII files: ./pgmComp slice0a.pgm balloons.pgm"
+echo "Testing pgmComp.c with two different ASCII files: ./pgmComp slice0a.pgm balloons.pgm"
 ./pgmComp slice0a.pgm balloons.pgm
 echo ""
 
 # Testing pgmComp.c with two identical binary files
-echo "Testing pgmComp.c with two identical binary files: ./pgmComp coins.pgm binary.pgm"
-./pgmEcho binary
-./pgma2b 
-./pgmComp slice0a.pgm balloons.pgm
+echo "Testing pgmComp.c with two identical binary files: ./pgma2b coins.pgm coins.pgm"
+./pgma2b coins.pgm coins.pgm
+echo "./pgmEcho coins.pgm binary.pgm"
+./pgmEcho coins.pgm binary.pgm
+echo "./pgmComp coins.pgm binary.pgm"
+./pgmComp coins.pgm binary.pgm
 echo ""
 
 # Testing pgmComp.c with two different binary files
+echo "Testing pgmComp.c with two different binary files: ./pgma2b coins.pgm coins.pgm"
+./pgma2b coins.pgm coins.pgm
+echo "./pgma2b balloons.pgm balloons.pgm"
+./pgma2b balloons.pgm balloons.pgm
+echo "./pgmComp coins.pgm balloons.pgm"
+./pgmComp coins.pgm balloons.pgm
+echo ""
 
 # Testing pgma2b.c with an ASCII input file
+echo "Testing pgma2b.c with an ASCII input file: ./pgmb2a balloons.pgm balloons.pgm"
+./pgmb2a balloons.pgm balloons.pgm
+echo "./pgma2b balloons.pgm output.pgm"
+./pgma2b balloons.pgm output.pgm
+echo ""
 
 # Testing pgma2b.c with a binary input file
+
 
 # Testing pgmb2a.c with a binary input file
 
