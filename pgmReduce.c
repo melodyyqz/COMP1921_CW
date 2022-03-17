@@ -27,9 +27,19 @@ int reducedWidth(int factor, pgmFile *pgm){
     return (pgm->width / factor);
 }
 
-int saveReduced(){
+int saveReduced(int factor, pgmFile *pgm, int reducedWidth, int reducedHeight, FILE *outputFile, size_t nBytesWritten){
     int count = 0;
-    
+    unsigned char *nextGrayValue;
+    for (int i = 0; i <= reducedWidth * reducedHeight; i++) {
+        if (i % factor == 0){
+            nBytesWritten = fwrite(nextGrayValue, 1, 1, outputFile); // check where address, todo: look for smth related to writing to width and height        
+        }
+        if (count == reducedWidth){
+            count=0;
+        }
+        nextGrayValue++;
+    }
+    return 0;
 }
 
 int main(char** argv, int argc){
