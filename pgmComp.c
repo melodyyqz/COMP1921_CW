@@ -9,14 +9,16 @@
 #include "pgmReadWrite.h"
 #include "fileHandling.h"
 
-
-int main(int argc, char **argv){
+int main(int argc, char **argv)
+{
     // check arguments
-    if (argCheck(argc, 3, argv[0])!=0){
+    if (argCheck(argc, 3, argv[0]) != 0)
+    {
         exit(0);
     }
     // check if arguments is 0 when argCheck returns 0
-    if (argc==0){
+    if (argc == 0)
+    {
         exit(0);
     }
 
@@ -27,27 +29,30 @@ int main(int argc, char **argv){
     initialiseStruct(secondPgm);
 
     // reads files
-    if (fileRead(argv[1], firstPgm)!=0 || fileRead(argv[2], secondPgm)!=0){
+    if (fileRead(argv[1], firstPgm) != 0 || fileRead(argv[2], secondPgm) != 0)
+    {
         exit(0);
     }
 
-    // assigns the pointer for each file   
+    // assigns the pointer for each file
     unsigned char *nextFirstGrayValue = firstPgm->imageData;
     unsigned char *nextSecondGrayValue = secondPgm->imageData;
-    
+
     // calculates the image bytes of the first pgm file and sets nImageBytes to it
-    long nImageBytes=firstPgm->width*firstPgm->height*sizeof(unsigned char);
-    
+    long nImageBytes = firstPgm->width * firstPgm->height * sizeof(unsigned char);
+
     // loops through checking each value of the file
-    while(nextFirstGrayValue<firstPgm->imageData+nImageBytes){
-            // checks if the value being pointed at in the first file is equal to the value being pointed at in the second file
-            if(((float) *nextSecondGrayValue)!=((float)*nextFirstGrayValue)){
-                    printf("DIFFERENT\n");
-                    return EXIT_NO_ERRORS;
-            }
-            // increments values of pointers
-            nextFirstGrayValue++;
-            nextSecondGrayValue++;
+    while (nextFirstGrayValue < firstPgm->imageData + nImageBytes)
+    {
+        // checks if the value being pointed at in the first file is equal to the value being pointed at in the second file
+        if (((float)*nextSecondGrayValue) != ((float)*nextFirstGrayValue))
+        {
+            printf("DIFFERENT\n");
+            return EXIT_NO_ERRORS;
+        }
+        // increments values of pointers
+        nextFirstGrayValue++;
+        nextSecondGrayValue++;
     }
 
     // successful
