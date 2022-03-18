@@ -24,7 +24,6 @@
 // definitions for error codes and maximum values
 #include "definitions.h"
 #include "pgmReadWrite.h"
-#include "pgma2b.h"
 
 
 /***********************************/
