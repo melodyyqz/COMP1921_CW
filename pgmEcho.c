@@ -25,7 +25,6 @@
 #include "definitions.h"
 #include "pgmReadWrite.h"
 
-
 /***********************************/
 /* main routine                    */
 /*                                 */
@@ -41,26 +40,35 @@ int main(int argc, char **argv)
     // initialising pgm file
     pgmFile *thePgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(thePgm);
-    
+
     // check arguments
     argCheck(argc, 3, argv[0]);
     // check if arguments is 0 when argCheck returns 0
-    if (argc==0){
+    if (argc == 0)
+    {
         exit(0);
     }
-    if (fileRead(argv[1], thePgm)!=0){
+    // reads the input file and if it didn't read correctly, exit the program
+    if (fileRead(argv[1], thePgm) != 0)
+    {
         exit(0);
     }
-    if (thePgm->magic_number[1]=='2'){
-        if (fileWrite(argv[2], thePgm, 2)==0){
-        printf("ECHOED\n");
-        return EXIT_NO_ERRORS;
+    // echoes ASCII files
+    if (thePgm->magic_number[1] == '2')
+    {
+        if (fileWrite(argv[2], thePgm, 2) == 0)
+        {
+            printf("ECHOED\n");
+            return EXIT_NO_ERRORS;
         }
     }
-    if (thePgm->magic_number[1]=='5'){
-        if (fileWrite(argv[2], thePgm, 5)==0){
-        printf("ECHOED\n");
-        return EXIT_NO_ERRORS;
+    // echoes binary files
+    if (thePgm->magic_number[1] == '5')
+    {
+        if (fileWrite(argv[2], thePgm, 5) == 0)
+        {
+            printf("ECHOED\n");
+            return EXIT_NO_ERRORS;
         }
     }
-    }
+}

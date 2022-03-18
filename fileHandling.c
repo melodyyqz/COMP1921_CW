@@ -8,20 +8,21 @@
 #include "definitions.h"
 
 // initialise the pgm structure
-int initialiseStruct(pgmFile *pgm){
-    pgm->width = 0;
-    pgm->height = 0;
-    pgm->gray = 255;
-    pgm->imageData = NULL;
-    pgm->commentLine = NULL;
-    pgm->magic_number[0] = '0';
+int initialiseStruct(pgmFile *pgm)
+{
+	pgm->width = 0;
+	pgm->height = 0;
+	pgm->gray = 255;
+	pgm->imageData = NULL;
+	pgm->commentLine = NULL;
+	pgm->magic_number[0] = '0';
 	pgm->magic_number[1] = '0';
 	pgm->magic_Number = NULL;
-    return EXIT_NO_ERRORS;
+	return EXIT_NO_ERRORS;
 }
 
 // argCheck function
-int argCheck(int argNum, int correctArgNum, char* fileName)
+int argCheck(int argNum, int correctArgNum, char *fileName)
 {
 	// if number of arguments is only 1
 	if (argNum == 1)
@@ -33,14 +34,14 @@ int argCheck(int argNum, int correctArgNum, char* fileName)
 	}
 	else if (argNum != correctArgNum)
 	{
-		// return error code
+		// return error code and print error message
 		printf("ERROR: Bad Argument Count\n");
 		return EXIT_WRONG_ARG_COUNT;
 	}
 	return EXIT_NO_ERRORS;
 }
 
-int checkMN(FILE *inputFile, unsigned char *magic_number, char* fileName)
+int checkMN(FILE *inputFile, unsigned char *magic_number, char *fileName)
 {
 	// read in the magic number
 	magic_number[0] = getc(inputFile);
@@ -60,7 +61,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, char* fileName)
 	return EXIT_NO_ERRORS;
 }
 
-int commentLine(FILE *inputFile, char* fileName, char *commentLine)
+int commentLine(FILE *inputFile, char *fileName, char *commentLine)
 {
 	// skip past space
 	int scanCount = fscanf(inputFile, " ");
@@ -72,15 +73,21 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 		// allocate buffer
 		commentLine = (char *)malloc(MAX_COMMENT_LINE_LENGTH);
 		char *commentString = commentLine;
+		//initialise count
 		int count = 0;
-		while (1==1){
+		// repeat loop until conditions within while loop are met
+		while (1 == 1)
+		{
 			count++;
 			*commentString = fgetc(inputFile);
-			if(*commentString=='\n'){
+			// reads comment until next line, i.e. end of comment line
+			if (*commentString == '\n')
+			{
 				return 0;
 			}
 			commentString++;
-			if (commentString == NULL || count>128)
+			// if comment string = null or there are more than 128 characters, return error and exit function
+			if (commentString == NULL || count > 128)
 			{
 				// free memory
 				free(commentLine);
@@ -95,7 +102,6 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 		// // reads a line and capture return value
 		// char *commentString = fgets(commentLine, MAX_COMMENT_LINE_LENGTH, inputFile);
 		// NULL comment read
-		
 	}
 	else
 	{
@@ -105,7 +111,7 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine)
 	return EXIT_NO_ERRORS;
 }
 
-int widthHeightGray(FILE *inputFile, char* fileName, pgmFile *pgm)
+int widthHeightGray(FILE *inputFile, char *fileName, pgmFile *pgm)
 {
 	// scan whitespace if present
 	int scanCount = fscanf(inputFile, " ");
@@ -124,7 +130,8 @@ int widthHeightGray(FILE *inputFile, char* fileName, pgmFile *pgm)
 		// close file pointer
 		fclose(inputFile);
 
-		if (pgm->gray != 255){
+		if (pgm->gray != 255)
+		{
 			// print an error message and return error code
 			printf("ERROR: Bad Max Gray Value %s\n", fileName);
 			return EXIT_BAD_MAX_GRAY;
@@ -137,7 +144,7 @@ int widthHeightGray(FILE *inputFile, char* fileName, pgmFile *pgm)
 	return EXIT_NO_ERRORS;
 }
 
-int memAlloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned int width, unsigned int height, pgmFile *pgm)
+int memAlloc(unsigned char *imageData, FILE *inputFile, char *fileName, unsigned int width, unsigned int height, pgmFile *pgm)
 {
 	// sanity check for memory allocation
 	if (imageData == NULL)
@@ -158,7 +165,7 @@ int memAlloc(unsigned char *imageData, FILE *inputFile, char* fileName, unsigned
 	return EXIT_NO_ERRORS;
 }
 
-int effRead(unsigned char *imageData, FILE *inputFile, char* fileName, long nImageBytes, pgmFile* pgm)
+int effRead(unsigned char *imageData, FILE *inputFile, char *fileName, long nImageBytes, pgmFile *pgm)
 {
 	// pointer for efficient read code
 	unsigned char *nextGrayValue;
@@ -191,7 +198,7 @@ int effRead(unsigned char *imageData, FILE *inputFile, char* fileName, long nIma
 int binaryRead(pgmFile *pgm, FILE *inputFile)
 {
 	getc(inputFile);
+	// reads file byte by byte
 	fread(pgm->imageData, sizeof(unsigned char), (pgm->width * pgm->height), inputFile);
 	return EXIT_NO_ERRORS;
 }
-
