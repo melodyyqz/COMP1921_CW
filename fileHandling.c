@@ -53,7 +53,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, char *fileName)
 		fclose(inputFile);
 
 		// print an error message
-		printf("ERROR: Bad Magic Number %s\n", fileName);
+		printf("ERROR: Bad Magic Number (%s)\n", fileName);
 
 		// and return
 		return EXIT_BAD_MAGIC_NUM;
@@ -95,7 +95,7 @@ int commentLine(FILE *inputFile, char *fileName, char *commentLine)
 				fclose(inputFile);
 
 				// print an error message and return error code
-				printf("ERROR: Bad Comment Line %s\n", fileName);
+				printf("ERROR: Bad Comment Line (%s)\n", fileName);
 				return EXIT_BAD_COMMENT;
 			}
 		}
@@ -133,12 +133,12 @@ int widthHeightGray(FILE *inputFile, char *fileName, pgmFile *pgm)
 		if (pgm->gray != 255)
 		{
 			// print an error message and return error code
-			printf("ERROR: Bad Max Gray Value %s\n", fileName);
+			printf("ERROR: Bad Max Gray Value (%s)\n", fileName);
 			return EXIT_BAD_MAX_GRAY;
 		}
 
 		// print an error message and return error code
-		printf("ERROR: Bad Dimensions %s\n", fileName);
+		printf("ERROR: Bad Dimensions (%s)\n", fileName);
 		return EXIT_BAD_DIMENSIONS;
 	}
 	return EXIT_NO_ERRORS;
@@ -186,7 +186,7 @@ int effRead(unsigned char *imageData, FILE *inputFile, char *fileName, long nIma
 			fclose(inputFile);
 
 			// print error message and return error code
-			printf("ERROR: Bad Data %s\n", fileName);
+			printf("ERROR: Bad Data (%s)\n", fileName);
 			return EXIT_BAD_DATA;
 		} // fscanf failed
 		// set the pixel value
