@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     initialiseStruct(thePgm);
 
     // check arguments
-    argCheck(argc, 3, argv[0]);
+    argCheck(argc, 3);
     // check if arguments is 0 when argCheck returns 0
     if (argc == 0)
     {

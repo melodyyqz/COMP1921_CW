@@ -22,13 +22,11 @@ int initialiseStruct(pgmFile *pgm)
 }
 
 // argCheck function
-int argCheck(int argNum, int correctArgNum, char *fileName)
+int argCheck(int argNum, int correctArgNum)
 {
 	// if number of arguments is only 1
-	if (argNum == 1)
+	if (argNum == 0)
 	{
-		// print error message
-		printf("Usage: %s input_file output_file\n", fileName);
 		// return error code
 		return 0;
 	}

@@ -11,7 +11,7 @@
 int main(int argc, char **argv)
 {
     // check arguments
-    if (argCheck(argc, 3, argv[0]) != 0)
+    if (argCheck(argc, 3) != 0)
     {
         exit(0);
     }
