@@ -46,6 +46,7 @@ int main(int argc, char **argv)
     // check if arguments is 0 when argCheck returns 0
     if (argc == 0)
     {
+        printf("Usage: ./pgmEcho inputImage.pgm outputImage.pgm");
         exit(0);
     }
     // reads the input file and if it didn't read correctly, exit the program

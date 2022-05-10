@@ -17,7 +17,7 @@ int checkFileOpen(FILE *outputFile, char *commentLine, unsigned char *imageData,
         free(imageData);
 
         // print an error message and return error code
-        printf("ERROR: Bad File Name %s\n", outputFileName);
+        printf("ERROR: Bad File Name (%s)\n", outputFileName);
         return EXIT_BAD_FILENAME;
     }
     return EXIT_NO_ERRORS;
@@ -32,7 +32,7 @@ int checkDimensionalWrite(size_t nBytesWritten, char *commentLine, unsigned char
         free(imageData);
 
         // print an error message and return error code
-        printf("ERROR: Bad Dimensions %s\n", outputFileName);
+        printf("ERROR: Bad Dimensions (%s)\n", outputFileName);
         return EXIT_BAD_DIMENSIONS;
     }
     return EXIT_NO_ERRORS;
@@ -63,7 +63,7 @@ int effWriteCode(unsigned char *imageData, long nImageBytes, unsigned int width,
             free(imageData);
 
             // print error message and return error code
-            printf("ERROR: Bad Data %s\n", outputFileName);
+            printf("ERROR: Bad Data (%s)\n", outputFileName);
             return EXIT_BAD_DATA;
         }
     } // per gray value
