@@ -46,7 +46,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, char *fileName)
 	magic_number[1] = getc(inputFile);
 	// sanity check on the magic number
 	// failed magic number check
-	if (magic_number[1] != '2' && magic_number[1] != '5')
+	if (magic_number[0] != 'P' || (magic_number[1] != '2' && magic_number[1] != '5'))
 	{
 		fclose(inputFile);
 
@@ -118,8 +118,8 @@ int widthHeightGray(FILE *inputFile, char *fileName, pgmFile *pgm)
 	// sanity checks on size & grays - must read exactly three values
 	if (
 		(scanCount != 3) ||
-		(pgm->width < MIN_IMAGE_DIMENSION) || (pgm->width > MAX_IMAGE_DIMENSION) ||
-		(pgm->height < MIN_IMAGE_DIMENSION) || (pgm->height > MAX_IMAGE_DIMENSION) ||
+		(pgm->width <= MIN_IMAGE_DIMENSION) || (pgm->width >= MAX_IMAGE_DIMENSION) ||
+		(pgm->height <= MIN_IMAGE_DIMENSION) || (pgm->height >= MAX_IMAGE_DIMENSION) ||
 		(pgm->gray != 255))
 	{
 		// failed size sanity check then free up the memory
