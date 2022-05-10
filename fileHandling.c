@@ -142,7 +142,7 @@ int widthHeightGray(FILE *inputFile, char *fileName, pgmFile *pgm)
 	return EXIT_NO_ERRORS;
 }
 
-int memAlloc(unsigned char *imageData, FILE *inputFile, char *fileName, unsigned int width, unsigned int height, pgmFile *pgm)
+int memAlloc(unsigned char *imageData, FILE *inputFile, char *fileName, pgmFile *pgm)
 {
 	// sanity check for memory allocation
 	if (imageData == NULL)

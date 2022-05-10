@@ -31,7 +31,7 @@ int fileRead(char *fileName, pgmFile *thePgm)
     thePgm->nImageBytes = thePgm->width * thePgm->height * sizeof(unsigned char);
     thePgm->imageData = (unsigned char *)malloc(thePgm->nImageBytes);
     // allocates memory for image
-    if (memAlloc(thePgm->imageData, inputFile, fileName, thePgm->width, thePgm->height) != 0)
+    if (memAlloc(thePgm->imageData, inputFile, fileName, thePgm) != 0)
         // reads image data into struct
         exit(0);
     if (thePgm->magic_number[1] == '5')
