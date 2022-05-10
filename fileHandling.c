@@ -190,6 +190,15 @@ int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 		// set the pixel value
 		*nextGrayValue = (unsigned char)grayValue;
 	}
+
+	// reads through one extra time to see if there is extra data i.e. too much data
+	int grayValue = -1;
+	int scanCount = fscanf(inputFile, " %u", &grayValue);
+	if (scanCount == 1){
+		printf("ERROR: Bad Data (%s)\n", fileName);
+		exit(EXIT_BAD_DATA);
+	}
+
 	return EXIT_NO_ERRORS;
 }
 
