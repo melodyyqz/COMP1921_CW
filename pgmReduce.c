@@ -17,11 +17,8 @@ the plan:
 - repeat
 */
 
-int imageData2D(pgmFile *pgm){
+unsigned int imageData2D(int m, int n, unsigned char *newImageData[m][n], pgmFile *pgm){
     int i,j, count;
-    unsigned char (**newImageData)[reducedWidth][reducedHeight];
-    *newImageData = malloc(sizeof(*newImageData));
-
     count=0;
     for (i = 0; i<pgm->height; i++){
         for (j = 0; j<pgm->width; j++){
@@ -32,40 +29,19 @@ int imageData2D(pgmFile *pgm){
     return 0;
 }
 
-int reduceFile(int factor, pgmFile *pgm)
+int reduceFile(int factor, pgmFile *pgm, int m, int n, unsigned char *originalArray[m][n])
 {
-    int reducedWidth, reducedHeight;
-    reducedWidth = (pgm->Width +factor-1) / factor;
-    reducedHeight = (pgm->Height +factor-1) / factor;
+    int reducedWidth, reducedHeight, i, j, k;
+    reducedWidth = (pgm->width +factor-1) / factor;
+    reducedHeight = (pgm->height +factor-1) / factor;
 
-    unsigned char (**reducedFile)[reducedWidth][reducedHeight];
-    *reducedFile = malloc(sizeof(*reducedFile));
-
-    // long nImageBytes = reducedWidth * reducedHeight * sizeof(unsignedchar);
-    // unsigned char *reducedFile = (unsigned char *)malloc(nImageBytes);
-    // int count = 0, i;
-    // unsigned char *nextGrayValue;
-    // // only loops the number of times of the size of the reduced image
-    // for (i = 0; i <= reducedWidth * reducedHeight; i++)
-    // {
-    //     // writes to file if the it is the first byte or the byte equal to 0 when there is no remainder when divided by the factor
-    //     if (count == 0 || count % factor == 0)
-    //     {
-    //         nBytesWritten = fwrite(nextGrayValue, 1, 1, outputFile);
-    //     }
-    //     // if the count reaches the width, reset count so it starts a new line
-    //     if (count == reducedWidth)
-    //     {
-    //         count = 0;
-    //     }
-    //     // increment values
-    //     count++;
-    //     nextGrayValue++;
-    // }
-    int i, j;
+    unsigned char **reducedArray = (unsigned char**)malloc(reducedWidth * sizeof(unsigned char*));
+    for (k = 0; i<reducedWidth; k++){
+        reducedArray[k] = (unsigned char*)malloc(reducedHeight * sizeof(unsigned char));
+    }
     for (i = 0; i < pgm->width; i+=factor ){
         for (j = 0; j < pgm->height; j+=factor){
-            reducedFile[i][j] = pgm->imageData[]
+            reducedArray[i][j] = originalArray[i][j];
         }
     }
     return EXIT_NO_ERRORS;
@@ -73,8 +49,9 @@ int reduceFile(int factor, pgmFile *pgm)
 
 int main(char **argv, int argc)
 {
+    int i;
     // check arguments
-    if (argCheck(argc, 4, argv[0]) != 0)
+    if (argCheck(argc, 4) != 0)
     {
         exit(0);
     }
@@ -85,7 +62,7 @@ int main(char **argv, int argc)
     }
     // define arguments for readability
     char *inputFileName = argv[0];
-    int factor = (int)argv[1];
+    int factor = (int) *argv[1];
     char *outputFileName = argv[2];
 
     // creates pgm struct for the input file and output file
@@ -101,8 +78,11 @@ int main(char **argv, int argc)
 
     // calculates what the width of the reduced file should be
     int reducedWidth = firstPgm->width / factor;
-
-    imageData2D(firstPgm);
+    unsigned char **newImageData = (unsigned char **)malloc(firstPgm->height * sizeof(unsigned char*));
+    for (i = 0; i < firstPgm->height; i++){
+        newImageData[i] = (unsigned char *)malloc(firstPgm->width * sizeof(unsigned char));
+    }
+    imageData2D(newImageData, firstPgm, firstPgm->width, firstPgm->height);
     // writes reduced file
     FILE *outputFile = fopen(outputFileName, "w");
     size_t nBytesWritten = fprintf(outputFile, "P%i\n%d %d\n%d\n", (int)firstPgm->magic_number[1], firstPgm->width, firstPgm->height, firstPgm->gray);

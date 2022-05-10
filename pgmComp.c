@@ -55,7 +55,6 @@ int main(int argc, char **argv)
         nextFirstGrayValue++;
         nextSecondGrayValue++;
     }
-
     // successful
     printf("IDENTICAL\n");
     return EXIT_NO_ERRORS;
