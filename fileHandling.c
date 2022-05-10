@@ -34,7 +34,7 @@ int argCheck(int argNum, int correctArgNum)
 	{
 		// return error code and print error message
 		printf("ERROR: Bad Argument Count\n");
-		return EXIT_WRONG_ARG_COUNT;
+		exit(EXIT_WRONG_ARG_COUNT);
 	}
 	return EXIT_NO_ERRORS;
 }
@@ -54,7 +54,7 @@ int checkMN(FILE *inputFile, unsigned char *magic_number, char *fileName)
 		printf("ERROR: Bad Magic Number (%s)\n", fileName);
 
 		// and return
-		return EXIT_BAD_MAGIC_NUM;
+		exit(EXIT_BAD_MAGIC_NUM);
 	} // failed magic number check
 	return EXIT_NO_ERRORS;
 }
@@ -91,10 +91,10 @@ int commentLine(FILE *inputFile, char *fileName, char *commentLine)
 				free(commentLine);
 				// close file
 				fclose(inputFile);
-
+				return 
 				// print an error message and return error code
 				printf("ERROR: Bad Comment Line (%s)\n", fileName);
-				return EXIT_BAD_COMMENT;
+				exit(EXIT_BAD_COMMENT);
 			}
 		}
 		// // reads a line and capture return value
@@ -132,12 +132,12 @@ int widthHeightGray(FILE *inputFile, char *fileName, pgmFile *pgm)
 		{
 			// print an error message and return error code
 			printf("ERROR: Bad Max Gray Value (%s)\n", fileName);
-			return EXIT_BAD_MAX_GRAY;
+			exit(EXIT_BAD_MAX_GRAY);
 		}
 
 		// print an error message and return error code
 		printf("ERROR: Bad Dimensions (%s)\n", fileName);
-		return EXIT_BAD_DIMENSIONS;
+		exit(EXIT_BAD_DIMENSIONS);
 	}
 	return EXIT_NO_ERRORS;
 }
@@ -157,7 +157,7 @@ int memAlloc(unsigned char *imageData, FILE *inputFile, char *fileName, unsigned
 		printf("ERROR: Image Malloc Failed\n");
 
 		// return error code
-		return EXIT_IMAGE_MALLOC_FAIL;
+		exit(EXIT_IMAGE_MALLOC_FAIL);
 	} // malloc failed
 	// allocate the data pointer
 	return EXIT_NO_ERRORS;
@@ -185,7 +185,7 @@ int effRead(unsigned char *imageData, FILE *inputFile, char *fileName, long nIma
 
 			// print error message and return error code
 			printf("ERROR: Bad Data (%s)\n", fileName);
-			return EXIT_BAD_DATA;
+			exit(EXIT_BAD_DATA);
 		} // fscanf failed
 		// set the pixel value
 		*nextGrayValue = (unsigned char)grayValue;

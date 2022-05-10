@@ -16,7 +16,7 @@ int fileRead(char *fileName, pgmFile *thePgm)
     if (inputFile == NULL)
     {
         printf("ERROR: Bad File Name (%s)", fileName);
-        return EXIT_BAD_FILENAME;
+        exit(EXIT_BAD_FILENAME);
     }
     // checks the magic numbers
     if ((checkMN(inputFile, thePgm->magic_number, fileName) != 0) ||
