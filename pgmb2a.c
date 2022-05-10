@@ -31,11 +31,11 @@ int main(int argc, char **argv)
     {
         exit(0);
     }
-    // checks that the input file is a binary file
+    // checks if the input file is already an ascii file
     if (firstPgm->magic_number[1] != '5')
     {
-        printf("ERROR: Invalid file type\n");
-        return EXIT_MISC;
+        printf("ERROR: Bad Magic Number (%s)\n", argv[1]);
+        exit(EXIT_BAD_MAGIC_NUM);
     }
     // converts input file to ASCII file
     if (fileWrite(argv[2], firstPgm, 2) == 0)

@@ -35,8 +35,8 @@ int main(int argc, char **argv)
     // checks that the input file is an ASCII file
     if (firstPgm->magic_number[1] != '2')
     {
-        printf("ERROR: Invalid file type\n");
-        return EXIT_MISC;
+        printf("ERROR: Bad Magic Number (%s)\n", argv[1]);
+        exit(EXIT_BAD_MAGIC_NUM);
     }
     // converts input file to binary file
     if (fileWrite(argv[2], firstPgm, 5) == 0)

@@ -56,6 +56,12 @@ int fileWrite(char *outputFileName, pgmFile *pgm, int aOrB)
 {
     // open a file for writing
     FILE *outputFile = fopen(outputFileName, "w");
+    // checks file is writeable
+    if (outputFile == NULL)
+    {
+        printf("ERROR: Bad File Name (%s)", outputFileName);
+        exit(EXIT_OUTPUT_FAILED);
+    }
     if (checkFileOpen(outputFile, pgm->commentLine, pgm->imageData, outputFileName) != 0)
     {
         exit(0);
