@@ -17,12 +17,12 @@ the plan:
 - repeat
 */
 
-unsigned int imageData2D(int m, int n, unsigned char *newImageData[m][n], pgmFile *pgm){
+int imageData2D(int m, int n, unsigned char *newImageData[m][n], pgmFile *pgm){
     int i,j, count;
     count=0;
     for (i = 0; i<pgm->height; i++){
         for (j = 0; j<pgm->width; j++){
-            newImageData[j][i] = pgm->imageData[count];
+            *newImageData[i][j] = pgm->imageData[count];
             count++;
         }
     }
@@ -41,7 +41,7 @@ int reduceFile(int factor, pgmFile *pgm, int m, int n, unsigned char *originalAr
     }
     for (i = 0; i < pgm->width; i+=factor ){
         for (j = 0; j < pgm->height; j+=factor){
-            reducedArray[i][j] = originalArray[i][j];
+            reducedArray[i][j] = *originalArray[i][j];
         }
     }
     return EXIT_NO_ERRORS;
@@ -82,7 +82,7 @@ int main(char **argv, int argc)
     for (i = 0; i < firstPgm->height; i++){
         newImageData[i] = (unsigned char *)malloc(firstPgm->width * sizeof(unsigned char));
     }
-    imageData2D(newImageData, firstPgm, firstPgm->width, firstPgm->height);
+    imageData2D(firstPgm->width, firstPgm->height, *newImageData[firstPgm->width][firstPgm->height], firstPgm);
     // writes reduced file
     FILE *outputFile = fopen(outputFileName, "w");
     size_t nBytesWritten = fprintf(outputFile, "P%i\n%d %d\n%d\n", (int)firstPgm->magic_number[1], firstPgm->width, firstPgm->height, firstPgm->gray);

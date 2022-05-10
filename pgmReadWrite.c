@@ -52,7 +52,7 @@ int fileRead(char *fileName, pgmFile *thePgm)
 }
 
 // aOrB allows passing in 2 or 5 for ASCII vs binary
-int fileWrite(char *outputFileName, pgmFile *pgm, int aOrB)
+int fileWrite(char *outputFileName, pgmFile *pgm, int aOrB) 
 {
     // open a file for writing
     FILE *outputFile = fopen(outputFileName, "w");
