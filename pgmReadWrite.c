@@ -43,7 +43,7 @@ int fileRead(char *fileName, pgmFile *thePgm)
     }
     else if (thePgm->magic_number[1] == '2')
     {
-        if (effRead(thePgm->imageData, inputFile, fileName, thePgm->nImageBytes) != 0)
+        if (effRead(inputFile, fileName, thePgm) != 0)
         {
             exit(0);
         }

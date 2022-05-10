@@ -17,7 +17,7 @@ int main(int argc, char **argv)
         exit(0);
     }
     // check if arguments is 0 when argCheck returns 0
-    if (argc == 0)
+    if (argc == 1)
     {
         printf("Usage: ./pgmComp inputImage.pgm inputImage.pgm");
         exit(0);

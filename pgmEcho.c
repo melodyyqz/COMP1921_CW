@@ -44,7 +44,7 @@ int main(int argc, char **argv)
     // check arguments
     argCheck(argc, 3);
     // check if arguments is 0 when argCheck returns 0
-    if (argc == 0)
+    if (argc == 1)
     {
         printf("Usage: ./pgmEcho inputImage.pgm outputImage.pgm");
         exit(0);

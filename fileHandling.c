@@ -25,7 +25,7 @@ int initialiseStruct(pgmFile *pgm)
 int argCheck(int argNum, int correctArgNum)
 {
 	// if number of arguments is only 1
-	if (argNum == 0)
+	if (argNum == 1)
 	{
 		// return error code
 		return 0;
@@ -163,11 +163,11 @@ int memAlloc(unsigned char *imageData, FILE *inputFile, char *fileName, unsigned
 	return EXIT_NO_ERRORS;
 }
 
-int effRead(unsigned char *imageData, FILE *inputFile, char *fileName, long nImageBytes, pgmFile *pgm)
+int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 {
 	// pointer for efficient read code
 	unsigned char *nextGrayValue;
-	for (nextGrayValue = imageData; nextGrayValue < imageData + nImageBytes; nextGrayValue++)
+	for (nextGrayValue = pgm->imageData; nextGrayValue < pgm->imageData + pgm->nImageBytes; nextGrayValue++)
 	{
 		// per gray value read next value
 		int grayValue = -1;
@@ -178,7 +178,7 @@ int effRead(unsigned char *imageData, FILE *inputFile, char *fileName, long nIma
 		{ // fscanf failed
 			// free memory
 			free(pgm->commentLine);
-			free(imageData);
+			free(pgm->imageData);
 
 			// close file
 			fclose(inputFile);
