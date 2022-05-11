@@ -36,27 +36,35 @@ int main(int argc, char **argv)
     }
 
     // assigns the pointer for each file
-    unsigned char *nextFirstGrayValue = firstPgm->imageData;
-    unsigned char *nextSecondGrayValue = secondPgm->imageData;
+    // unsigned char *nextFirstGrayValue = firstPgm->imageData;
+    // unsigned char *nextSecondGrayValue = secondPgm->imageData;
 
-    firstPgm->imageData[i] == secondPgm->imageData[i];
+    // firstPgm->imageData[i] == secondPgm->imageData[i];
 
     // calculates the image bytes of the first pgm file and sets nImageBytes to it
     long nImageBytes = firstPgm->width * firstPgm->height * sizeof(unsigned char);
 
     // loops through checking each value of the file
-    while (nextFirstGrayValue < firstPgm->imageData + nImageBytes)
-    {
-        // checks if the value being pointed at in the first file is equal to the value being pointed at in the second file
-        if (((float)*nextSecondGrayValue) != ((float)*nextFirstGrayValue))
-        {
-            printf("DIFFERENT\n");
-            return EXIT_NO_ERRORS;
-        }
-        // increments values of pointers
-        nextFirstGrayValue++;
-        nextSecondGrayValue++;
+    for (int i = 0; i<firstPgm->height; i++){
+        for (int j = 0; j<firstPgm->width; j++){
+            if (firstPgm->imageData[i][j]!=secondPgm->imageData[i][j]){
+                printf("DIFFERENT\n");
+                return EXIT_NO_ERRORS;
+            }
+        }    
     }
+    // while (nextFirstGrayValue < firstPgm->imageData + nImageBytes)
+    // {
+    //     // checks if the value being pointed at in the first file is equal to the value being pointed at in the second file
+    //     if (((float)*nextSecondGrayValue) != ((float)*nextFirstGrayValue))
+    //     {
+    //         printf("DIFFERENT\n");
+    //         return EXIT_NO_ERRORS;
+    //     }
+    //     // increments values of pointers
+    //     nextFirstGrayValue++;
+    //     nextSecondGrayValue++;
+    // }
     // successful
     printf("IDENTICAL\n");
     return EXIT_NO_ERRORS;
