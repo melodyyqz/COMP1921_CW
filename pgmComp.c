@@ -39,6 +39,8 @@ int main(int argc, char **argv)
     unsigned char *nextFirstGrayValue = firstPgm->imageData;
     unsigned char *nextSecondGrayValue = secondPgm->imageData;
 
+    firstPgm->imageData[i] == secondPgm->imageData[i];
+
     // calculates the image bytes of the first pgm file and sets nImageBytes to it
     long nImageBytes = firstPgm->width * firstPgm->height * sizeof(unsigned char);
 

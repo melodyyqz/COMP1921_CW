@@ -167,25 +167,31 @@ int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 {
 	// pointer for efficient read code
 	unsigned char *nextGrayValue;
-	for (nextGrayValue = pgm->imageData; nextGrayValue < pgm->imageData + pgm->nImageBytes; nextGrayValue++)
+	int i=0, j=0;
+	for (i = 0; i<pgm->height; i++)
 	{
-		// per gray value read next value
-		int grayValue = -1;
-		int scanCount = fscanf(inputFile, " %u", &grayValue);
+		for (j = 0; j<pgm->width; j++)
+		{
+			// per gray value read next value
+			int grayValue = -1;
+			int scanCount = fscanf(inputFile, " %u", &grayValue);
 
-		// sanity check
-		if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255))
-		{ // fscanf failed
-			// free memory
-			free(pgm->commentLine);
-			free(pgm->imageData);
 
-			// close file
-			fclose(inputFile);
+			// sanity check
+			if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255))
+			{ // fscanf failed
+				// free memory
+				free(pgm->commentLine);
+				free(*pgm->imageData);
 
-			// print error message and return error code
-			printf("ERROR: Bad Data (%s)\n", fileName);
-			exit(EXIT_BAD_DATA);
+				// close file
+				fclose(inputFile);
+
+				// print error message and return error code
+				printf("read");
+				printf("ERROR: Bad Data (%s)\n", fileName);
+				exit(EXIT_BAD_DATA);
+			}
 		} // fscanf failed
 		// set the pixel value
 		*nextGrayValue = (unsigned char)grayValue;
@@ -195,9 +201,13 @@ int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 	int grayValue = -1;
 	int scanCount = fscanf(inputFile, " %u", &grayValue);
 	if (scanCount == 1){
+		printf("scancount read");
 		printf("ERROR: Bad Data (%s)\n", fileName);
 		exit(EXIT_BAD_DATA);
 	}
+
+	unsigned char *nextGrayValue;
+
 
 	return EXIT_NO_ERRORS;
 }
@@ -206,6 +216,6 @@ int binaryRead(pgmFile *pgm, FILE *inputFile)
 {
 	getc(inputFile);
 	// reads file byte by byte
-	fread(pgm->imageData, sizeof(unsigned char), (pgm->width * pgm->height), inputFile);
+	fread(*pgm->imageData, sizeof(unsigned char), (pgm->width * pgm->height), inputFile);
 	return EXIT_NO_ERRORS;
 }

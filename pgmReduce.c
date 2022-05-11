@@ -32,9 +32,7 @@ int imageData2D(int m, int n, unsigned char **newImageData, pgmFile *pgm){
 int reduceFile(int factor, pgmFile *pgm, int m, int n, unsigned char *originalArray[m][n])
 {
     int reducedWidth, reducedHeight, i, j, k;
-    reducedWidth = (pgm->width +factor-1) / factor;
-    reducedHeight = (pgm->height +factor-1) / factor;
-
+    
     unsigned char **reducedArray = (unsigned char**)malloc(reducedWidth * sizeof(unsigned char*));
     for (k = 0; i<reducedWidth; k++){
         reducedArray[k] = (unsigned char*)malloc(reducedHeight * sizeof(unsigned char));
@@ -45,11 +43,10 @@ int reduceFile(int factor, pgmFile *pgm, int m, int n, unsigned char *originalAr
         }
     }
     return EXIT_NO_ERRORS;
-}
+}f 
 
 int main(char **argv, int argc)
 {
-    int i;
     // check arguments
     if (argCheck(argc, 4) != 0)
     {
@@ -68,17 +65,16 @@ int main(char **argv, int argc)
     // creates pgm struct for the input file and output file
     pgmFile *firstPgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(firstPgm);
-    pgmFile *secondPgm = (pgmFile *)malloc(sizeof(pgmFile));
-    initialiseStruct(secondPgm);
     // reads input file and output file
     fileRead(inputFileName, firstPgm);
-    // calculates what the height of the reduced file should be
-    int reducedHeight = firstPgm->height / factor;
+    // calculates what the height and width of the reduced file should be
+    int reducedWidth = (pgm->width +factor-1) / factor;
+    int reducedHeight = (pgm->height +factor-1) / factor;
 
-    // calculates what the width of the reduced file should be
-    int reducedWidth = firstPgm->width / factor;
+    pgmFile *secondPgm = (pgmFile *)malloc(sizeof(reducedHeight*reducedWidth));
+    initialiseStruct(secondPgm);
     unsigned char **newImageData = (unsigned char **)malloc(firstPgm->height * sizeof(unsigned char*));
-    for (i = 0; i < firstPgm->height; i++){
+    for (int i = 0; i < firstPgm->height; i++){
         newImageData[i] = (unsigned char *)malloc(firstPgm->width * sizeof(unsigned char));
     }
     imageData2D(firstPgm->width, firstPgm->height, newImageData, firstPgm);

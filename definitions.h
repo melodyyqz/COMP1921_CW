@@ -23,7 +23,7 @@
 // defines struct for pgm files with the characteristics
 typedef struct _pgmFile {
     unsigned int width, height, gray;
-    unsigned char *imageData;
+    unsigned char **imageData;
     unsigned char magic_number[2];
     unsigned short *magic_Number;
     char *commentLine;
