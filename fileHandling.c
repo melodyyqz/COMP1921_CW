@@ -223,6 +223,11 @@ int binaryRead(pgmFile *pgm, FILE *inputFile)
 				}
 		}
 	}
+	if (fgetc(inputFile) != EOF){
+		printf("ERROR: Bad Data (%s)\n", inputFile);
+		exit(EXIT_BAD_DATA);	
+	}
+
 
 	return EXIT_NO_ERRORS;
 }
