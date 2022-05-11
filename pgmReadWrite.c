@@ -29,9 +29,17 @@ int fileRead(char *fileName, pgmFile *thePgm)
         exit(0);
     }
     // assigns memory for image data
-    thePgm->imageData = (unsigned char **)malloc(thePgm->height * sizeof(unsigned char*));
+    thePgm->imageData = (unsigned char **)malloc(thePgm->height * sizeof(*thePgm->imageData));
+    if(thePgm->imageData==NULL){
+        printf("ERROR: Image Malloc Failed\n");
+        exit(EXIT_IMAGE_MALLOC_FAIL);
+    }
     for (int i = 0; i < thePgm->height; i++){
-        thePgm->imageData[i] = (unsigned char *)malloc(thePgm->width * sizeof(unsigned char));
+        thePgm->imageData[i] = (unsigned char *)malloc(thePgm->width * sizeof(unsigned char));    
+        if(thePgm->imageData[i]==NULL){
+            printf("ERROR: Image Malloc Failed\n");
+            exit(EXIT_IMAGE_MALLOC_FAIL);
+        }
     }
     // allocates memory for image
     if (memAlloc(*thePgm->imageData, inputFile, fileName, thePgm) != 0)

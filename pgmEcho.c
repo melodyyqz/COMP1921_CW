@@ -39,6 +39,7 @@
 int main(int argc, char **argv)
 {
     // initialising pgm file
+    
     pgmFile *thePgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(thePgm);
 
