@@ -39,9 +39,7 @@
 int main(int argc, char **argv)
 {
     // initialising pgm file
-    printf("1");
     pgmFile *thePgm = (pgmFile *)malloc(sizeof(pgmFile));
-    printf("2");
     initialiseStruct(thePgm);
 
     // check arguments

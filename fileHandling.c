@@ -166,11 +166,10 @@ int memAlloc(unsigned char *imageData, FILE *inputFile, char *fileName, pgmFile 
 int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 {
 	// pointer for efficient read code
-	unsigned char *nextGrayValue;
-	int i=0, j=0;
-	for (i = 0; i<pgm->height; i++)
+	// unsigned char *nextGrayValue;
+	for (int i = 0; i<pgm->height; i++)
 	{
-		for (j = 0; j<pgm->width; j++)
+		for (int j = 0; j<pgm->width; j++)
 		{
 			// per gray value read next value
 			int grayValue = -1;
@@ -188,20 +187,19 @@ int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 				fclose(inputFile);
 
 				// print error message and return error code
-				printf("read");
 				printf("ERROR: Bad Data (%s)\n", fileName);
 				exit(EXIT_BAD_DATA);
 			}
+			pgm->imageData[i][j] = grayValue;
 		} // fscanf failed
 		// set the pixel value
-		*nextGrayValue = (unsigned char)grayValue;
+		// *nextGrayValue = (unsigned char)grayValue;
 	}
 
 	// reads through one extra time to see if there is extra data i.e. too much data
 	int grayValue = -1;
 	int scanCount = fscanf(inputFile, " %u", &grayValue);
 	if (scanCount == 1){
-		printf("scancount read");
 		printf("ERROR: Bad Data (%s)\n", fileName);
 		exit(EXIT_BAD_DATA);
 	}

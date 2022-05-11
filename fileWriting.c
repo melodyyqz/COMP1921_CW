@@ -40,43 +40,19 @@ int checkDimensionalWrite(size_t nBytesWritten, pgmFile *pgm, char *outputFileNa
 
 int effWriteCode(pgmFile *pgm, size_t nBytesWritten, FILE *outputFile, char *outputFileName, int targetMagicNum)
 {
-    // pointer for efficient write code
-    // unsigned char *nextGrayValue;
-    // for (nextGrayValue = *pgm->imageData; nextGrayValue < *pgm->imageData + pgm->nImageBytes; nextGrayValue++)
-    // { // per gray value get next char's column
-    //     int nextCol = (nextGrayValue - *pgm->imageData + 1) % pgm->width;
-    //     // write the entry & whitespace
-    //     if (targetMagicNum == 2)
-    //     {
-    //         nBytesWritten = fprintf(outputFile, "%d%c", *nextGrayValue, (nextCol ? ' ' : '\n'));
-    //     }
-    //     if (targetMagicNum == 5)
-    //     {
-    //         nBytesWritten = fwrite(nextGrayValue, 1, 1, outputFile);
-    //     }
-
-    //     // sanity check on write
-    //     if (nBytesWritten < 0)
-    //     { // data write failed then free memory
-    //         free(pgm->commentLine);
-    //         free(*pgm->imageData);
-
-    //         // print error message and return error code
-    //         printf("write");
-    //         printf("ERROR: Bad Data (%s)\n", outputFileName);
-    //         return EXIT_BAD_DATA;
-    //     }
-    // } // per gray value
-
-    for (i=0; i<pgm->height; i++){
-        for (j=0; j<pgm->width; j++){
+    // loop through height of 2d array storing image data
+    for (int i=0; i<pgm->height; i++){
+        // loop through width
+        for (int j=0; j<pgm->width; j++){
+            // check if ASCII
             if (targetMagicNum == 2)
                 {
-                    nBytesWritten = fprintf(outputFile, "%d%c", pgm->imageData[i][j], (nextCol ? ' ' : '\n'));
+                    nBytesWritten = fprintf(outputFile, "%d%c", pgm->imageData[i][j], ' ');
                 }
+            // check if binary
             if (targetMagicNum == 5)
                 {
-                    nBytesWritten = fwrite(nextGrayValue, 1, 1, outputFile);
+                    nBytesWritten = fwrite(&pgm->imageData[i][j], sizeof(unsigned char), 1, outputFile);
                 }
             if (nBytesWritten < 0)
             { // data write failed then free memory
@@ -89,6 +65,7 @@ int effWriteCode(pgmFile *pgm, size_t nBytesWritten, FILE *outputFile, char *out
                 return EXIT_BAD_DATA;
             }
         }
+        nBytesWritten = fprintf(outputFile, "%c", '\n');
     }
 
     // at this point, we are done and can exit with a success code
