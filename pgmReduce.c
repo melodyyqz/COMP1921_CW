@@ -17,12 +17,12 @@ the plan:
 - repeat
 */
 
-int imageData2D(int m, int n, unsigned char *newImageData[m][n], pgmFile *pgm){
+int imageData2D(int m, int n, unsigned char **newImageData, pgmFile *pgm){
     int i,j, count;
     count=0;
     for (i = 0; i<pgm->height; i++){
         for (j = 0; j<pgm->width; j++){
-            *newImageData[i][j] = pgm->imageData[count];
+            newImageData[i][j] = pgm->imageData[count];
             count++;
         }
     }
@@ -72,7 +72,6 @@ int main(char **argv, int argc)
     initialiseStruct(secondPgm);
     // reads input file and output file
     fileRead(inputFileName, firstPgm);
-    fileRead(outputFileName, secondPgm);
     // calculates what the height of the reduced file should be
     int reducedHeight = firstPgm->height / factor;
 
@@ -82,8 +81,12 @@ int main(char **argv, int argc)
     for (i = 0; i < firstPgm->height; i++){
         newImageData[i] = (unsigned char *)malloc(firstPgm->width * sizeof(unsigned char));
     }
-    imageData2D(firstPgm->width, firstPgm->height, *newImageData[firstPgm->width][firstPgm->height], firstPgm);
+    imageData2D(firstPgm->width, firstPgm->height, newImageData, firstPgm);
     // writes reduced file
     FILE *outputFile = fopen(outputFileName, "w");
+    if (firstPgm->magic_number[1]=='5')
+        fileWrite(outputFileName, secondPgm,5);
+    if (firstPgm->magic_number[1]=='2')
+        fileWrite(outputFileName, secondPgm,2);    
     size_t nBytesWritten = fprintf(outputFile, "P%i\n%d %d\n%d\n", (int)firstPgm->magic_number[1], firstPgm->width, firstPgm->height, firstPgm->gray);
 }
