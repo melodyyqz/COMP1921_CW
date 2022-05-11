@@ -46,14 +46,10 @@ int effWriteCode(pgmFile *pgm, size_t nBytesWritten, FILE *outputFile, char *out
         for (int j=0; j<pgm->width; j++){
             // check if ASCII
             if (targetMagicNum == 2)
-                {
-                    nBytesWritten = fprintf(outputFile, "%d%c", pgm->imageData[i][j], ' ');
-                }
+                nBytesWritten = fprintf(outputFile, "%d%c", pgm->imageData[i][j], ' ');
             // check if binary
             if (targetMagicNum == 5)
-                {
-                    nBytesWritten = fwrite(&pgm->imageData[i][j], sizeof(unsigned char), 1, outputFile);
-                }
+                nBytesWritten = fwrite(&pgm->imageData[i][j], sizeof(unsigned char), 1, outputFile);
             if (nBytesWritten < 0)
             { // data write failed then free memory
                 free(pgm->commentLine);
@@ -65,7 +61,8 @@ int effWriteCode(pgmFile *pgm, size_t nBytesWritten, FILE *outputFile, char *out
                 return EXIT_BAD_DATA;
             }
         }
-        nBytesWritten = fprintf(outputFile, "%c", '\n');
+        if (targetMagicNum == 2)
+            nBytesWritten = fprintf(outputFile, "%c", '\n');
     }
 
     // at this point, we are done and can exit with a success code

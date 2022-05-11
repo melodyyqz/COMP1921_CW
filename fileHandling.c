@@ -214,6 +214,15 @@ int binaryRead(pgmFile *pgm, FILE *inputFile)
 {
 	getc(inputFile);
 	// reads file byte by byte
-	fread(*pgm->imageData, sizeof(unsigned char), (pgm->width * pgm->height), inputFile);
+	for (int i = 0; i<pgm->height; i++){
+		for (int j = 0; j<pgm->width; j++){
+			if (fread(&pgm->imageData[i][j], sizeof(unsigned char), 1, inputFile) == 0)
+				{
+					printf("ERROR: Bad Data (%s)\n", inputFile);
+					exit(EXIT_BAD_DATA);	
+				}
+		}
+	}
+
 	return EXIT_NO_ERRORS;
 }
