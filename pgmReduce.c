@@ -26,10 +26,11 @@ int checkFactor(char **argv){
 
 int reduceFile(int factor, pgmFile *bigPgm, pgmFile *reducedPgm)
 {
+    // goes through row and column
     for (int height = 0, row = 0; height<bigPgm->height; height+=factor, row++){
         for (int width = 0, col = 0; width<bigPgm->width; width+=factor, col++){
+            // sets image data of the new pgm equal to the relevant data of the old pgm
             reducedPgm->imageData[row][col] = bigPgm->imageData[height][width];   
-            printf("%d", bigPgm->imageData[height][width]);
         }
     }
     return EXIT_NO_ERRORS;
@@ -37,32 +38,15 @@ int reduceFile(int factor, pgmFile *bigPgm, pgmFile *reducedPgm)
 
 int main(int argc, char **argv)
 {
-    // outputs usage error message when no files are entered
-    
-    printf("%i", argc);
-    
-    if (argCheck(argc, 4) != 0)
-    {
-        printf("Fail");
-        exit(1);
-    }
+    // checks number of arguments
+    (argCheck(argc, 4));
     if (argc == 1)
     {
+        // outputs usage error message when no files are entered
         printf("Usage: ./pgmReduce inputImage.pgm reduction_factor outputImage.pgm\n");
         exit(0);
     }
-    // check correct number of arguments are entered
-    
-    // {
-    //     exit(1);
-    // }
-    // // check if arguments is 0 when argCheck returns 0
-    // if (argc == 0)
-    // {
-    //     exit(0);
-    // }
-    // int factor = checkFactor(argv);
-
+    // checks factor entered is a positive integer
     int factor = atoi(argv[2]);
     if (factor == 0) {
         printf("ERROR: Miscellaneous (non-numeric scaling factor)\n");
@@ -82,6 +66,7 @@ int main(int argc, char **argv)
     int reducedWidth = (firstPgm->width +factor-1) / factor;
     int reducedHeight = (firstPgm->height +factor-1) / factor;
     
+    // allocates, initialises and sets correct values for the second pgm structure
     pgmFile *secondPgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(secondPgm);
     secondPgm->height = reducedHeight;
@@ -90,15 +75,17 @@ int main(int argc, char **argv)
     secondPgm->magic_number[0] = firstPgm->magic_number[0];
     secondPgm->magic_number[1] = firstPgm->magic_number[1];
 
+    // allocates memory dynamically for 2d array image data
     secondPgm->imageData = (unsigned char **)malloc(secondPgm->height * sizeof(*secondPgm->imageData));
     for (int i = 0; i < secondPgm->height; i++){
         secondPgm->imageData[i] = (unsigned char *)malloc(secondPgm->width * sizeof(unsigned char));    
     }
-    // writes reduced file
+    // calls function to reduce the pgm structure
     reduceFile(factor, firstPgm, secondPgm);
-
+    // opens file for writing
     FILE *outputFile = fopen(argv[3], "w");
-
+    // writes the data stored in secondPgm to file
+    // write method depends on whether the file is binary or ascii
     if (firstPgm->magic_number[1]=='5')
         fileWrite(argv[3], secondPgm,2);
     if (firstPgm->magic_number[1]=='2')
