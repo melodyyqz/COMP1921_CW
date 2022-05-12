@@ -98,16 +98,11 @@ int main(int argc, char **argv)
     reduceFile(factor, firstPgm, secondPgm);
 
     FILE *outputFile = fopen(argv[3], "w");
-    fileWrite(argv[3], secondPgm,2);
-    // if (firstPgm->magic_number[1]=='5')
-    // {
-    //     printf("here");
-        
-    // }
-    // if (firstPgm->magic_number[1]=='2')
-    //     {
-    //         fileWrite(argv[3], secondPgm,2);  
-    //     }  
+
+    if (firstPgm->magic_number[1]=='5')
+        fileWrite(argv[3], secondPgm,2);
+    if (firstPgm->magic_number[1]=='2')
+        fileWrite(argv[3], secondPgm,2);  
     // size_t nBytesWritten = fprintf(outputFile, "P%i\n%d %d\n%d\n", (int)firstPgm->magic_number[1], firstPgm->width, firstPgm->height, firstPgm->gray);
     printf("REDUCED\n");
     return EXIT_NO_ERRORS;
