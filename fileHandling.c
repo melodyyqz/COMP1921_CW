@@ -24,17 +24,17 @@ int initialiseStruct(pgmFile *pgm)
 // argCheck function
 int argCheck(int argNum, int correctArgNum)
 {
-	// // if number of arguments is only 1
-	// if (argNum == 1)
-	// {
-	// 	// return error code
-	// 	return 0;
-	// }
+	// if number of arguments is only 1
+	if (argNum == 1)
+	{
+		// return error code
+		return 0;
+	}
 	if (argNum != correctArgNum)
 	{
 		// return error code and print error message
 		printf("ERROR: Bad Argument Count\n");
-		return(EXIT_WRONG_ARG_COUNT);
+		exit(EXIT_WRONG_ARG_COUNT);
 	}
 	return EXIT_NO_ERRORS;
 }
@@ -210,7 +210,7 @@ int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 	return EXIT_NO_ERRORS;
 }
 
-int binaryRead(pgmFile *pgm, FILE *inputFile)
+int binaryRead(pgmFile *pgm, FILE *inputFile, char *fileName)
 {
 	getc(inputFile);
 	// reads file byte by byte
@@ -218,13 +218,13 @@ int binaryRead(pgmFile *pgm, FILE *inputFile)
 		for (int j = 0; j<pgm->width; j++){
 			if (fread(&pgm->imageData[i][j], sizeof(unsigned char), 1, inputFile) == 0)
 				{
-					printf("ERROR: Bad Data (%s)\n", inputFile);
+					printf("ERROR: Bad Data (%s)\n", fileName);
 					exit(EXIT_BAD_DATA);	
 				}
 		}
 	}
 	if (fgetc(inputFile) != EOF){
-		printf("ERROR: Bad Data (%s)\n", inputFile);
+		printf("ERROR: Bad Data (%s)\n", fileName);
 		exit(EXIT_BAD_DATA);	
 	}
 

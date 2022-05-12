@@ -47,7 +47,7 @@ int fileRead(char *fileName, pgmFile *thePgm)
         exit(0);
     if (thePgm->magic_number[1] == '5')
     {
-        if (binaryRead(thePgm, inputFile) != 0)
+        if (binaryRead(thePgm, inputFile, fileName) != 0)
         {
             exit(0);
         }

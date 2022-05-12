@@ -10,6 +10,6 @@ int commentLine(FILE *inputFile, char* fileName, char *commentLine);
 int widthHeightGray(FILE *inputFile, char* fileName, pgmFile *pgm);
 int memAlloc(unsigned char **imageData, FILE *inputFile, char* fileName, pgmFile *pgm);
 int effRead(FILE *inputFile, char* fileName, pgmFile *pgm);
-int binaryRead(pgmFile *pgm, FILE *inputFile);
+int binaryRead(pgmFile *pgm, FILE *inputFile, char* fileName);
 
 #endif
