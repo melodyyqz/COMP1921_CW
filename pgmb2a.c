@@ -6,6 +6,7 @@
 
 // definitions for error codes and maximum values
 #include "definitions.h"
+#include "fileHandling.h"
 #include "pgmReadWrite.h"
 
 int main(int argc, char **argv)

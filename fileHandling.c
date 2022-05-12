@@ -24,17 +24,17 @@ int initialiseStruct(pgmFile *pgm)
 // argCheck function
 int argCheck(int argNum, int correctArgNum)
 {
-	// if number of arguments is only 1
-	if (argNum == 1)
-	{
-		// return error code
-		return 0;
-	}
-	else if (argNum != correctArgNum)
+	// // if number of arguments is only 1
+	// if (argNum == 1)
+	// {
+	// 	// return error code
+	// 	return 0;
+	// }
+	if (argNum != correctArgNum)
 	{
 		// return error code and print error message
 		printf("ERROR: Bad Argument Count\n");
-		exit(EXIT_WRONG_ARG_COUNT);
+		return(EXIT_WRONG_ARG_COUNT);
 	}
 	return EXIT_NO_ERRORS;
 }
@@ -142,7 +142,7 @@ int widthHeightGray(FILE *inputFile, char *fileName, pgmFile *pgm)
 	return EXIT_NO_ERRORS;
 }
 
-int memAlloc(unsigned char *imageData, FILE *inputFile, char *fileName, pgmFile *pgm)
+int memAlloc(unsigned char **imageData, FILE *inputFile, char *fileName, pgmFile *pgm)
 {
 	// sanity check for memory allocation
 	if (imageData == NULL)
