@@ -164,10 +164,13 @@ int memAlloc(FILE *inputFile, char *fileName, pgmFile *pgm)
 }
 
 void freeMemory (pgmFile *pgm){
+	// frees the memory allocated to 2D array imageData
 	for (int height = 0; height<pgm->height; height++)
 		free(pgm->imageData[height]);
 	free(pgm->imageData);
+	// frees memory allocated to commentLine
 	free(pgm->commentLine);
+	// frees memory allocated to pgm
 	free(pgm);
 }
 
@@ -214,8 +217,6 @@ int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 	}
 
 	unsigned char *nextGrayValue;
-
-
 	return EXIT_NO_ERRORS;
 }
 
@@ -232,11 +233,10 @@ int binaryRead(pgmFile *pgm, FILE *inputFile, char *fileName)
 				}
 		}
 	}
+	// checks if there is more data after the specified height and width
 	if (fgetc(inputFile) != EOF){
 		printf("ERROR: Bad Data (%s)\n", fileName);
 		exit(EXIT_BAD_DATA);	
 	}
-
-
 	return EXIT_NO_ERRORS;
 }

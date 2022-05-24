@@ -23,7 +23,7 @@ int main(int argc, char **argv)
         exit(0);
     }
 
-    // initialising the pgm files
+    // initialising the pgms
     pgmFile *firstPgm = (pgmFile *)malloc(sizeof(pgmFile));
     initialiseStruct(firstPgm);
     pgmFile *secondPgm = (pgmFile *)malloc(sizeof(pgmFile));
@@ -49,6 +49,7 @@ int main(int argc, char **argv)
     }
     // successful
     printf("IDENTICAL\n");
+    // frees memory from both pgm structs
     freeMemory(firstPgm);
     freeMemory(secondPgm);
     return EXIT_NO_ERRORS;

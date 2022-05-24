@@ -43,9 +43,11 @@ int fileRead(char *fileName, pgmFile *thePgm)
         }
     }
     // allocates memory for image
-    if (memAlloc(inputFile, fileName, thePgm) != 0)
+    if (memAlloc(inputFile, fileName, thePgm) != 0){
         // reads image data into struct
         exit(0);
+    }
+    // reads file differently depending on whether it is binary or ASCII
     if (thePgm->magic_number[1] == '5')
     {
         if (binaryRead(thePgm, inputFile, fileName) != 0)

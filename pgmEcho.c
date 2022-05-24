@@ -62,6 +62,7 @@ int main(int argc, char **argv)
         if (fileWrite(argv[2], thePgm, 2) == 0)
         {
             printf("ECHOED\n");
+            // frees the memory
             freeMemory(thePgm);
             return EXIT_NO_ERRORS;
         }
@@ -72,6 +73,7 @@ int main(int argc, char **argv)
         if (fileWrite(argv[2], thePgm, 5) == 0)
         {
             printf("ECHOED\n");
+            // frees the memory
             freeMemory(thePgm);
             return EXIT_NO_ERRORS;
         }

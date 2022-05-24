@@ -79,6 +79,7 @@ int main(int argc, char **argv)
     if (firstPgm->magic_number[1]=='2')
         fileWrite(argv[3], secondPgm,2);  
     printf("REDUCED\n");
+    // frees memory from both pgm structs
     freeMemory(firstPgm);
     freeMemory(secondPgm);
     return EXIT_NO_ERRORS;

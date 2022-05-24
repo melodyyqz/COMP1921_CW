@@ -43,6 +43,7 @@ int main(int argc, char **argv)
     {
         printf("CONVERTED\n");
     }
+    // frees memory from pgm struct
     freeMemory(firstPgm);
     return EXIT_NO_ERRORS;
 }
