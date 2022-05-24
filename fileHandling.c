@@ -142,10 +142,10 @@ int widthHeightGray(FILE *inputFile, char *fileName, pgmFile *pgm)
 	return EXIT_NO_ERRORS;
 }
 
-int memAlloc(unsigned char **imageData, FILE *inputFile, char *fileName, pgmFile *pgm)
+int memAlloc(FILE *inputFile, char *fileName, pgmFile *pgm)
 {
 	// sanity check for memory allocation
-	if (imageData == NULL)
+	if (pgm->imageData == NULL)
 	{ // malloc failed
 		// free up memory
 		free(pgm->commentLine);
@@ -167,9 +167,9 @@ int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 {
 	// pointer for efficient read code
 	// unsigned char *nextGrayValue;
-	for (int i = 0; i<pgm->height; i++)
+	for (int height = 0; height<pgm->height; height++)
 	{
-		for (int j = 0; j<pgm->width; j++)
+		for (int width = 0; width<pgm->width; width++)
 		{
 			// per gray value read next value
 			int grayValue = -1;
@@ -190,10 +190,9 @@ int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 				printf("ERROR: Bad Data (%s)\n", fileName);
 				exit(EXIT_BAD_DATA);
 			}
-			pgm->imageData[i][j] = grayValue;
+			pgm->imageData[height][width] = grayValue;
 		} // fscanf failed
 		// set the pixel value
-		// *nextGrayValue = (unsigned char)grayValue;
 	}
 
 	// reads through one extra time to see if there is extra data i.e. too much data
@@ -214,9 +213,9 @@ int binaryRead(pgmFile *pgm, FILE *inputFile, char *fileName)
 {
 	getc(inputFile);
 	// reads file byte by byte
-	for (int i = 0; i<pgm->height; i++){
-		for (int j = 0; j<pgm->width; j++){
-			if (fread(&pgm->imageData[i][j], sizeof(unsigned char), 1, inputFile) == 0)
+	for (int height = 0; height<pgm->height; height++){
+		for (int width = 0; width<pgm->width; width++){
+			if (fread(&pgm->imageData[height][width], sizeof(unsigned char), 1, inputFile) == 0)
 				{
 					printf("ERROR: Bad Data (%s)\n", fileName);
 					exit(EXIT_BAD_DATA);	

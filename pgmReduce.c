@@ -12,18 +12,6 @@
 #include "pgmReadWrite.h"
 #include "fileHandling.h"
 
-int checkFactor(char **argv){
-    // int num = atoi(argv[2]);
-    // if (num == 0) {
-    //     printf("ERROR: Miscellaneous (non-numeric scaling factor)\n");
-    //     exit(EXIT_MISC);
-    // } else if (num < 0) {
-    //     printf("ERROR: Miscellaneous (negative scaling factor)\n");
-    //     exit(EXIT_MISC);
-    // }
-    // return EXIT_NO_ERRORS;
-}
-
 int reduceFile(int factor, pgmFile *bigPgm, pgmFile *reducedPgm)
 {
     // goes through row and column
@@ -77,8 +65,8 @@ int main(int argc, char **argv)
 
     // allocates memory dynamically for 2d array image data
     secondPgm->imageData = (unsigned char **)malloc(secondPgm->height * sizeof(*secondPgm->imageData));
-    for (int i = 0; i < secondPgm->height; i++){
-        secondPgm->imageData[i] = (unsigned char *)malloc(secondPgm->width * sizeof(unsigned char));    
+    for (int height = 0; height < secondPgm->height; height++){
+        secondPgm->imageData[height] = (unsigned char *)malloc(secondPgm->width * sizeof(unsigned char));    
     }
     // calls function to reduce the pgm structure
     reduceFile(factor, firstPgm, secondPgm);
@@ -90,7 +78,6 @@ int main(int argc, char **argv)
         fileWrite(argv[3], secondPgm,2);
     if (firstPgm->magic_number[1]=='2')
         fileWrite(argv[3], secondPgm,2);  
-    // size_t nBytesWritten = fprintf(outputFile, "P%i\n%d %d\n%d\n", (int)firstPgm->magic_number[1], firstPgm->width, firstPgm->height, firstPgm->gray);
     printf("REDUCED\n");
     return EXIT_NO_ERRORS;
 }

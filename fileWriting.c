@@ -41,15 +41,15 @@ int checkDimensionalWrite(size_t nBytesWritten, pgmFile *pgm, char *outputFileNa
 int effWriteCode(pgmFile *pgm, size_t nBytesWritten, FILE *outputFile, char *outputFileName, int targetMagicNum)
 {
     // loop through height of 2d array storing image data
-    for (int i=0; i<pgm->height; i++){
+    for (int height=0; height<pgm->height; height++){
         // loop through width
-        for (int j=0; j<pgm->width; j++){
+        for (int width=0; width<pgm->width; width++){
             // check if ASCII
             if (targetMagicNum == 2)
-                nBytesWritten = fprintf(outputFile, "%d%c", pgm->imageData[i][j], ' ');
+                nBytesWritten = fprintf(outputFile, "%d%c", pgm->imageData[height][width], ' ');
             // check if binary
             if (targetMagicNum == 5)
-                nBytesWritten = fwrite(&pgm->imageData[i][j], sizeof(unsigned char), 1, outputFile);
+                nBytesWritten = fwrite(&pgm->imageData[height][width], sizeof(unsigned char), 1, outputFile);
             if (nBytesWritten < 0)
             { // data write failed then free memory
                 free(pgm->commentLine);

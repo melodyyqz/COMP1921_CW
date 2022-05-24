@@ -35,36 +35,18 @@ int main(int argc, char **argv)
         exit(0);
     }
 
-    // assigns the pointer for each file
-    // unsigned char *nextFirstGrayValue = firstPgm->imageData;
-    // unsigned char *nextSecondGrayValue = secondPgm->imageData;
-
-    // firstPgm->imageData[i] == secondPgm->imageData[i];
-
     // calculates the image bytes of the first pgm file and sets nImageBytes to it
     long nImageBytes = firstPgm->width * firstPgm->height * sizeof(unsigned char);
 
     // loops through checking each value of the file
-    for (int i = 0; i<firstPgm->height; i++){
-        for (int j = 0; j<firstPgm->width; j++){
-            if (firstPgm->imageData[i][j]!=secondPgm->imageData[i][j]){
+    for (int row = 0; row<firstPgm->height; row++){
+        for (int column = 0; column<firstPgm->width; column++){
+            if (firstPgm->imageData[row][column]!=secondPgm->imageData[row][column]){
                 printf("DIFFERENT\n");
                 return EXIT_NO_ERRORS;
             }
         }    
     }
-    // while (nextFirstGrayValue < firstPgm->imageData + nImageBytes)
-    // {
-    //     // checks if the value being pointed at in the first file is equal to the value being pointed at in the second file
-    //     if (((float)*nextSecondGrayValue) != ((float)*nextFirstGrayValue))
-    //     {
-    //         printf("DIFFERENT\n");
-    //         return EXIT_NO_ERRORS;
-    //     }
-    //     // increments values of pointers
-    //     nextFirstGrayValue++;
-    //     nextSecondGrayValue++;
-    // }
     // successful
     printf("IDENTICAL\n");
     return EXIT_NO_ERRORS;

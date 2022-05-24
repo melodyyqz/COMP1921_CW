@@ -34,15 +34,15 @@ int fileRead(char *fileName, pgmFile *thePgm)
         printf("ERROR: Image Malloc Failed\n");
         exit(EXIT_IMAGE_MALLOC_FAIL);
     }
-    for (int i = 0; i < thePgm->height; i++){
-        thePgm->imageData[i] = (unsigned char *)malloc(thePgm->width * sizeof(unsigned char));    
-        if(thePgm->imageData[i]==NULL){
+    for (int height = 0; height < thePgm->height; height++){
+        thePgm->imageData[height] = (unsigned char *)malloc(thePgm->width * sizeof(unsigned char));    
+        if(thePgm->imageData[height]==NULL){
             printf("ERROR: Image Malloc Failed\n");
             exit(EXIT_IMAGE_MALLOC_FAIL);
         }
     }
     // allocates memory for image
-    if (memAlloc(*thePgm->imageData, inputFile, fileName, thePgm) != 0)
+    if (memAlloc(inputFile, fileName, thePgm) != 0)
         // reads image data into struct
         exit(0);
     if (thePgm->magic_number[1] == '5')
