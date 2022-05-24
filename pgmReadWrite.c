@@ -30,6 +30,7 @@ int fileRead(char *fileName, pgmFile *thePgm)
     }
     // assigns memory for image data
     thePgm->imageData = (unsigned char **)malloc(thePgm->height * sizeof(*thePgm->imageData));
+    // checks if memory allocation for the imageData 2D array failed
     if(thePgm->imageData==NULL){
         printf("ERROR: Image Malloc Failed\n");
         exit(EXIT_IMAGE_MALLOC_FAIL);

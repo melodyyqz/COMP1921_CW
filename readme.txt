@@ -13,3 +13,7 @@ where file1.pgm is the ASCII file you want to convert to binary, and file2.pgm i
 To run pgmb2a.c, cd to assignment_1, then type:
     ./pgmb2a.c file1.pgm file2.pgm
 where file1.pgm is the binary file you want to convert to ASCII, and file2.pgm is the file you want to output file1.pgm, in ASCII, to
+
+To run pgmReduce.c, cd to assignment_1, then type:
+    ./pgmReduce file1.pgm reduce_factor file2.pgm
+where file1.pgm is the input file, the reduce_factor is the integer you want to reduce the input file by, and file2.pgm is the output file.

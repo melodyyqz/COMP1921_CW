@@ -141,10 +141,10 @@ echo "Testing pgma2b.c with an ASCII input file: ./pgma2b asciitester.pgm output
 ./pgma2b asciitester.pgm output.pgm
 echo -e "\n"
 
-# Testing pgma2b.c with a binary input file
-echo "Testing pgma2b with a binary input file: ./pgma2b binarytester.pgm output.pgm"
-./pgma2b binarytester.pgm output.pgm
-echo -e "\n"
+# # Testing pgma2b.c with a binary input file
+# echo "Testing pgma2b with a binary input file: ./pgma2b binarytester.pgm output.pgm"
+# ./pgma2b binarytester.pgm output.pgm
+# echo -e "\n"
 
 # Testing pgmb2a.c with no file names
 echo "Testing pgmb2a.c with no file names: ./pgmb2a"
@@ -171,7 +171,8 @@ echo "Testing pgma2b with a binary input file: ./pgmb2a binarytester.pgm output.
 ./pgmb2a binarytester.pgm output.pgm
 echo -e "\n"
 
-# Testing pgmb2a.c with an ASCII input file
-echo "Testing pgmb2a.c with an ASCII input file: ./pgmb2a asciitester.pgm output.pgm"
-./pgmb2a asciitester.pgm output.pgm
-echo -e "\n"
+# # Testing pgmb2a.c with an ASCII input file
+# echo "Testing pgmb2a.c with an ASCII input file: ./pgmb2a asciitester.pgm output.pgm"
+# ./pgmb2a asciitester.pgm output.pgm
+# echo -e "\n"
+

@@ -163,6 +163,14 @@ int memAlloc(FILE *inputFile, char *fileName, pgmFile *pgm)
 	return EXIT_NO_ERRORS;
 }
 
+void freeMemory (pgmFile *pgm){
+	for (int height = 0; height<pgm->height; height++)
+		free(pgm->imageData[height]);
+	free(pgm->imageData);
+	free(pgm->commentLine);
+	free(pgm);
+}
+
 int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 {
 	// pointer for efficient read code
@@ -181,7 +189,9 @@ int effRead(FILE *inputFile, char *fileName, pgmFile *pgm)
 			{ // fscanf failed
 				// free memory
 				free(pgm->commentLine);
-				free(*pgm->imageData);
+				for (int height = 0; height<pgm->height; height++)
+					free(pgm->imageData[height]);
+				free(pgm->imageData);
 
 				// close file
 				fclose(inputFile);

@@ -44,5 +44,6 @@ int main(int argc, char **argv)
     {
         printf("CONVERTED\n");
     }
+    freeMemory(firstPgm);
     return EXIT_NO_ERRORS;
 }

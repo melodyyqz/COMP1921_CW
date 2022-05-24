@@ -49,5 +49,7 @@ int main(int argc, char **argv)
     }
     // successful
     printf("IDENTICAL\n");
+    freeMemory(firstPgm);
+    freeMemory(secondPgm);
     return EXIT_NO_ERRORS;
 }
