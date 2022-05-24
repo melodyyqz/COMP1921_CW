@@ -152,22 +152,22 @@ echo "Testing pgmb2a.c with no file names: ./pgmb2a"
 echo -e "\n"
 
 # Testing pgmb2a.c with one file name
-echo "Testing pgmb2a.c with no file names: ./pgmb2a binarytester.pgm"
+echo "Testing pgmb2a.c with one file names: ./pgmb2a binarytester.pgm"
 ./pgmb2a binarytester.pgm
 echo -e "\n"
 
 # Testing pgmb2a.c with two file names
-echo "Testing pgmb2a.c with no file names: ./pgmb2a binarytester.pgm output.pgm"
+echo "Testing pgmb2a.c with two file names: ./pgmb2a binarytester.pgm output.pgm"
 ./pgmb2a binarytester.pgm output.pgm
 echo -e "\n"
 
 # Testing pgmb2a.c with three file names
-echo "Testing pgmb2a.c with no file names: ./pgmb2a binarytester.pgm output.pgm output2.pgm"
+echo "Testing pgmb2a.c with three file names: ./pgmb2a binarytester.pgm output.pgm output2.pgm"
 ./pgmb2a binarytester.pgm output.pgm output2.pgm
 echo -e "\n"
 
 # Testing pgmb2a.c with a binary input file
-echo "Testing pgma2b with a binary input file: ./pgmb2a binarytester.pgm output.pgm"
+echo "Testing pgma2b.c with a binary input file: ./pgmb2a binarytester.pgm output.pgm"
 ./pgmb2a binarytester.pgm output.pgm
 echo -e "\n"
 
@@ -176,3 +176,47 @@ echo -e "\n"
 # ./pgmb2a asciitester.pgm output.pgm
 # echo -e "\n"
 
+# Testing pgmReduce.c with a binary input file
+echo "Testing pgmReduce.c with a binary input file: ./pgmReduce binarytester.pgm output.pgm"
+./pgmReduce binarytester.pgm output.pgm
+echo -e "\n"
+
+# Testing pgmReduce.c with an ASCII input file
+echo "Testing pgmReduce.c with an ASCII input file: ./pgmReduce asciitester.pgm output.pgm"
+./pgmReduce asciitester.pgm output.pgm
+echo -e "\n"
+
+# Testing pgmReduce.c with no file names
+echo "Testing pgmReduce.c with no file names: ./pgmReduce"
+./pgmReduce
+echo -e "\n"
+
+# Testing pgmReduce.c with one argument
+echo "Testing pgmReduce.c with one argument: ./pgmReduce binarytester.pgm"
+./pgmReduce binarytester.pgm
+echo -e "\n"
+
+# Testing pgmReduce.c with two arguments
+echo "Testing pgmReduce.c with two file names: ./pgmReduce binarytester.pgm output.pgm"
+./pgmReduce binarytester.pgm output.pgm
+echo -e "\n"
+
+# Testing pgmReduce.c with three correct arguments
+echo "Testing pgmReduce.c with three file names: ./pgmReduce binarytester.pgm 2 output.pgm"
+./pgmReduce binarytester.pgm 2 output.pgm output2.pgm
+echo -e "\n"
+
+# Testing pgmReduce.c with four arguments
+echo "Testing pgmReduce.c with three file names: ./pgmReduce binarytester.pgm 2 output.pgm output2.pgm"
+./pgmReduce binarytester.pgm 2 output.pgm
+echo -e "\n"
+
+#Testing pgmReduce.c with a negative reduce factor
+echo "Testing pgmReduce.c with a negative reduce factor: ./pgmReduce binarytester.pgm -3 output.pgm"
+./pgmReduce binarytester.pgm -3 output.pgm
+echo -e "\n"
+
+#Testing pgmReduce.c with a non-integer reduce factor
+echo "Testing pgmReduce.c with a non-integer reduce factor: ./pgmReduce binarytester.pgm d output.pgm"
+./pgmReduce binarytester.pgm d output.pgm
+echo -e "\n"
