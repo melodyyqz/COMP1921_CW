@@ -8,7 +8,7 @@ TARGETS = pgmEcho pgmComp pgma2b pgmb2a pgmReduce pgmTile
 all: ${TARGETS}
 
 clean:
-	rm ${TARGETS} ${MAINS} ${MODULES}
+	rm -rf ${TARGETS} ${MAINS} ${MODULES}
 
 pgmEcho:	pgmEcho.o ${MODULES}
 	${CC} ${CCFLAGS} -o pgmEcho pgmEcho.o ${MODULES}
